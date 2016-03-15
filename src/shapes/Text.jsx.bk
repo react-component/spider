@@ -1,0 +1,14 @@
+export default function (el, value) {
+	console.log('>> Rect text', this, el);
+	const group = el._el;
+	group.body = group.add({
+		type : 'text',
+		attrs : {
+			x : -this.props.width / 2, 
+			y : 0,
+			font: '24px arial',
+			fill: this.props.borderColor,
+			text: value
+		}
+	});
+}
