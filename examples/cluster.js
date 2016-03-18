@@ -21,11 +21,11 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(208);
+	var _reactDom = __webpack_require__(215);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// use jsx to render html, do not modify simple.html
 	
@@ -34,7 +34,7 @@ webpackJsonp([0],[
 	var rx = width / 2;
 	var ry = height / 2;
 	
-	var _Spider$Shape = _rcSpider2["default"].Shape;
+	var _Spider$Shape = _rcSpider2.default.Shape;
 	var Node = _Spider$Shape.Node;
 	var Circle = _Spider$Shape.Circle;
 	var Text = _Spider$Shape.Text;
@@ -42,15 +42,15 @@ webpackJsonp([0],[
 	
 	
 	function nodeCreator(data) {
-	  return _react2["default"].createElement(
+	  return _react2.default.createElement(
 	    Node,
 	    { width: '4.5', height: '4.5' },
-	    _react2["default"].createElement(Circle, null),
-	    _react2["default"].createElement(
+	    _react2.default.createElement(Circle, null),
+	    _react2.default.createElement(
 	      Text,
 	      { offset: [8, 3],
 	        textAnthor: data.x < 180 ? 'start' : 'end',
-	        transform: data.x < 180 ? null : new _rcSpider2["default"].Transform().rotate(180)
+	        transform: data.x < 180 ? null : new _rcSpider2.default.Transform().rotate(180)
 	      },
 	      data.name
 	    )
@@ -68,7 +68,7 @@ webpackJsonp([0],[
 	}
 	
 	function linkCreator(data) {
-	  return _react2["default"].createElement(Link, { projection: radial, data: data });
+	  return _react2.default.createElement(Link, { projection: radial, data: data });
 	}
 	
 	var data = new Request('./flare.json');
@@ -76,12 +76,12 @@ webpackJsonp([0],[
 	  return response.json();
 	}).then(function (response) {
 	  var tree = response;
-	  var cluster = _rcSpider2["default"].layout.cluster().size([360, ry - 120]);
+	  var cluster = _rcSpider2.default.layout.cluster().size([360, ry - 120]);
 	  var data = cluster.data(tree);
-	  _reactDom2["default"].render(_react2["default"].createElement(_rcSpider2["default"], { width: width, height: height, dataSource: data,
+	  _reactDom2.default.render(_react2.default.createElement(_rcSpider2.default, { width: width, height: height, dataSource: data,
 	    offset: [rx, ry],
 	    transform: function transform(d) {
-	      return new _rcSpider2["default"].Transform().rotate(d.x - 90).translate(d.y);
+	      return new _rcSpider2.default.Transform().rotate(d.x - 90).translate(d.y);
 	    },
 	    nodeCreator: nodeCreator,
 	    linkCreator: linkCreator
