@@ -1,4 +1,4 @@
-import { hierarchyVisitAfter, separation } from '../lib/Util';
+import { hierarchyVisitAfter, separation } from '../base/Util';
 import _ from 'lodash';
 
 

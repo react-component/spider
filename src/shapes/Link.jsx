@@ -3,7 +3,7 @@ import ReactART from 'react-art';
 const Group = ReactART.Group;
 const Text = ReactART.Text;
 const Shape = ReactART.Shape;
-import { diagonal } from '../lib/Util';
+import { diagonal } from '../base/Util';
 import _ from 'lodash';
 
 class Link extends Component {

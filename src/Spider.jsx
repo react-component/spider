@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import SpiderBase from './lib/SpiderBase.jsx';
+import SpiderBase from './base/SpiderBase.jsx';
 import Shape, { Link, Node, Circle, Rect } from './shapes';
 import ReactART from 'react-art';
 const Group = ReactART.Group;

@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import Node from '../lib/Node';
+import Node from '../base/Node';
 /**
  * loadArrayData
  * @param data
