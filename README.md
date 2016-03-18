@@ -8,11 +8,7 @@ React Spider Component
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-spider)](https://saucelabs.com/u/rc-spider)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-spider.svg)](https://saucelabs.com/u/rc-spider)
 
 [npm-image]: http://img.shields.io/npm/v/rc-spider.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-spider
