@@ -112,11 +112,11 @@
 	var _src = __webpack_require__(4);
 	
 	var _src2 = _interopRequireDefault(_src);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _src2.default; // export this package's api
-
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _src2["default"]; // export this package's api
+	
 	module.exports = exports['default'];
 
 /***/ },
@@ -132,11 +132,11 @@
 	var _Spider = __webpack_require__(5);
 	
 	var _Spider2 = _interopRequireDefault(_Spider);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _Spider2.default; // export this package's api
-
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _Spider2["default"]; // export this package's api
+	
 	module.exports = exports['default'];
 
 /***/ },
@@ -175,7 +175,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -183,21 +183,21 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Group = _reactArt2.default.Group;
-	var Transform = _reactArt2.default.Transform;
-	var Surface = _reactArt2.default.Surface;
+	var Group = _reactArt2["default"].Group;
+	var Transform = _reactArt2["default"].Transform;
+	var Surface = _reactArt2["default"].Surface;
 	
 	function noop() {}
 	function defaultNodeCreator(data) {
-	  return _react2.default.createElement(
+	  return _react2["default"].createElement(
 	    _shapes.Node,
 	    { margin: '10', width: '20', height: '20', data: data },
-	    _react2.default.createElement(_shapes.Circle, null)
+	    _react2["default"].createElement(_shapes.Circle, null)
 	  );
 	}
 	
 	function defaultLinkCreator(link) {
-	  return _react2.default.createElement(_shapes.Link, { data: link });
+	  return _react2["default"].createElement(_shapes.Link, { data: link });
 	}
 	
 	function defaultProjection(element) {
@@ -243,7 +243,7 @@
 	          links: []
 	        };
 	      }
-	      var treeDataSource = _lodash2.default.cloneDeep(dataSource);
+	      var treeDataSource = _lodash2["default"].cloneDeep(dataSource);
 	      var nodes = this.nodes(treeDataSource);
 	      var links = this.links(linkCreator);
 	
@@ -317,7 +317,7 @@
 	    }
 	
 	    /**
-	     * return node[s] from dataSource , filter by condition..
+	     * return node[s] from dataSource  filter by condition..
 	     * e.g. :
 	     * spider.select({id: 1}); // return node[s] that id=1
 	     * spider.select({_children: 2}); // return node[s] that has 2 children
@@ -365,7 +365,7 @@
 	        } else {
 	          groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
 	        }
-	        return _react2.default.createElement(
+	        return _react2["default"].createElement(
 	          Group,
 	          { className: 'node', key: 'node-' + idx, transform: groupTransform },
 	          node._display ? nodeCreator(node) : null
@@ -383,7 +383,7 @@
 	      var projection = _props2.projection;
 	
 	      return links.map(function (linkArray, idx) {
-	        return _react2.default.Children.map(linkArray.map(function (link) {
+	        return _react2["default"].Children.map(linkArray.map(function (link) {
 	          return linkCreator(link);
 	        }), _this3.passProjection, _this3);
 	      });
@@ -399,7 +399,7 @@
 	        stroke: child.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
 	        strokeWidth: child.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH
 	      };
-	      return _react2.default.cloneElement(child, cloneProps);
+	      return _react2["default"].cloneElement(child, cloneProps);
 	    }
 	  }, {
 	    key: 'render',
@@ -421,13 +421,13 @@
 	
 	      var groupTransform = new Transform().translate(left + offsetLeft, top + offsetTop);
 	      // node width
-	      return _react2.default.createElement(
+	      return _react2["default"].createElement(
 	        Surface,
 	        { width: width, height: height, ref: 'canvas' },
-	        _react2.default.createElement(
+	        _react2["default"].createElement(
 	          Group,
 	          { transform: groupTransform },
-	          _react2.default.Children.map(links, this.passProjection, this),
+	          _react2["default"].Children.map(links, this.passProjection, this),
 	          nodes
 	        )
 	      );
@@ -435,7 +435,7 @@
 	  }]);
 	
 	  return Spider;
-	}(_SpiderBase3.default);
+	}(_SpiderBase3["default"]);
 	
 	Spider.propTypes = {
 	  offset: _react.PropTypes.array, // 整个图的偏移
@@ -461,11 +461,11 @@
 	  linkCreator: defaultLinkCreator
 	};
 	
-	Spider.Shape = _shapes2.default;
-	Spider.layout = _layout2.default;
+	Spider.Shape = _shapes2["default"];
+	Spider.layout = _layout2["default"];
 	Spider.Transform = Transform;
 	
-	exports.default = Spider;
+	exports["default"] = Spider;
 	module.exports = exports['default'];
 
 /***/ },
@@ -20080,7 +20080,7 @@
 	
 	var _dataLoader2 = _interopRequireDefault(_dataLoader);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -20131,7 +20131,7 @@
 	    key: 'data',
 	    value: function data(rawData) {
 	      this.__rawData = rawData;
-	      this.__data = (0, _dataLoader2.default)(rawData, this);
+	      this.__data = (0, _dataLoader2["default"])(rawData, this);
 	      return this.__data;
 	    }
 	  }, {
@@ -20175,15 +20175,15 @@
 	  }]);
 	
 	  return SpiderBase;
-	}(_react2.default.Component);
+	}(_react2["default"].Component);
 	
 	SpiderBase.propTypes = {
-	  nodeCreator: _react2.default.PropTypes.func,
-	  width: _react2.default.PropTypes.any,
-	  height: _react2.default.PropTypes.any
+	  nodeCreator: _react2["default"].PropTypes.func,
+	  width: _react2["default"].PropTypes.any,
+	  height: _react2["default"].PropTypes.any
 	};
 	
-	exports.default = SpiderBase;
+	exports["default"] = SpiderBase;
 	module.exports = exports['default'];
 
 /***/ },
@@ -20195,7 +20195,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = dataLoader;
+	exports["default"] = dataLoader;
 	
 	var _immutable = __webpack_require__(165);
 	
@@ -20203,7 +20203,7 @@
 	
 	var _Node2 = _interopRequireDefault(_Node);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	/**
 	 * loadArrayData
@@ -20215,7 +20215,7 @@
 	  var linkMap = {};
 	  // 把所有节点放置到map里
 	  arr.forEach(function (data) {
-	    nodeMap[data.id] = new _Node2.default(data, spider);
+	    nodeMap[data.id] = new _Node2["default"](data, spider);
 	  });
 	
 	  arr.forEach(function (data) {
@@ -20253,7 +20253,7 @@
 	  var currentData = data;
 	
 	  function readNode(nodeData, parent) {
-	    var node = new _Node2.default(nodeData, spider);
+	    var node = new _Node2["default"](nodeData, spider);
 	
 	    nodeMap[node.id] = node;
 	
@@ -25302,13 +25302,13 @@
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var GLOBAL_NODE_WIDTH = _global2.default.GLOBAL_NODE_WIDTH;
-	var GLOBAL_NODE_HEIGHT = _global2.default.GLOBAL_NODE_HEIGHT;
-	var GLOBAL_NODE_MARGIN = _global2.default.GLOBAL_NODE_MARGIN;
+	var GLOBAL_NODE_WIDTH = _global2["default"].GLOBAL_NODE_WIDTH;
+	var GLOBAL_NODE_HEIGHT = _global2["default"].GLOBAL_NODE_HEIGHT;
+	var GLOBAL_NODE_MARGIN = _global2["default"].GLOBAL_NODE_MARGIN;
 	/**
 	 * class Node
 	 *
@@ -25321,7 +25321,7 @@
 	
 	    Object.assign(this, data);
 	    this.controlPoints(this.x, this.y, 'horizontal');
-	    this.id = data.id || _uuid2.default.v1();
+	    this.id = data.id || _uuid2["default"].v1();
 	    this.__data = data;
 	    this.__inDegree = 0;
 	    this.__outDegree = 0;
@@ -25338,7 +25338,7 @@
 	    key: 'render',
 	    value: function render(nodeCreator) {
 	      var data = this.__data;
-	      this._key = _uuid2.default.v1();
+	      this._key = _uuid2["default"].v1();
 	      this._el = nodeCreator(data, this.__spider);
 	      this.__width = Number(data.width || this._el.props.width) || GLOBAL_NODE_WIDTH;
 	      this.__height = Number(data.height || this._el.props.height) || GLOBAL_NODE_HEIGHT;
@@ -25440,7 +25440,7 @@
 	  return Node;
 	}();
 	
-	exports.default = Node;
+	exports["default"] = Node;
 	module.exports = exports['default'];
 
 /***/ },
@@ -25464,7 +25464,7 @@
 	window.GLOBAL_LINK_STROKE = window.GLOBAL_LINK_STROKE || 'black';
 	window.GLOBAL_LINK_STROKE_WIDTH = window.GLOBAL_LINK_STROKE_WIDTH || '1';
 	window.TEXT_DEFAULT_COLOR = window.TEXT_DEFAULT_COLOR || 'black';
-	exports.default = globalConfig;
+	exports["default"] = globalConfig;
 	module.exports = exports['default'];
 
 /***/ },
@@ -25724,14 +25724,14 @@
 	
 	var _Rect2 = _interopRequireDefault(_Rect);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	exports.default = {
-	  Link: _Link2.default,
-	  Node: _Node2.default,
-	  Circle: _Circle2.default,
-	  Rect: _Rect2.default,
-	  Text: _Text2.default
+	exports["default"] = {
+	  Link: _Link2["default"],
+	  Node: _Node2["default"],
+	  Circle: _Circle2["default"],
+	  Rect: _Rect2["default"],
+	  Text: _Text2["default"]
 	};
 	module.exports = exports['default'];
 
@@ -25763,7 +25763,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -25771,9 +25771,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Group = _reactArt2.default.Group;
-	var Text = _reactArt2.default.Text;
-	var Shape = _reactArt2.default.Shape;
+	var Group = _reactArt2["default"].Group;
+	var Text = _reactArt2["default"].Text;
+	var Shape = _reactArt2["default"].Shape;
 	
 	var Link = function (_Component) {
 	  _inherits(Link, _Component);
@@ -25805,13 +25805,13 @@
 	      var strokeWidth = _props.strokeWidth;
 	      // default theme style
 	
-	      var pathId = _lodash2.default.uniqueId('link_path_');
+	      var pathId = _lodash2["default"].uniqueId('link_path_');
 	      var path = (0, _Util.diagonal)(data, projection);
-	      return _react2.default.createElement(
+	      return _react2["default"].createElement(
 	        Group,
 	        { key: pathId },
-	        _react2.default.createElement(Shape, { d: path, stroke: stroke, strokeWidth: strokeWidth }),
-	        _react2.default.createElement(
+	        _react2["default"].createElement(Shape, { d: path, stroke: stroke, strokeWidth: strokeWidth }),
+	        _react2["default"].createElement(
 	          Text,
 	          _extends({}, theme.text, { textAnchor: 'middle', path: path }),
 	          text
@@ -25831,7 +25831,7 @@
 	  strokeWidth: _react.PropTypes.string
 	};
 	
-	exports.default = Link;
+	exports["default"] = Link;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44382,7 +44382,7 @@
 	
 	var _reactArt2 = _interopRequireDefault(_reactArt);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -44390,7 +44390,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Group = _reactArt2.default.Group;
+	var Group = _reactArt2["default"].Group;
 	
 	var Node = function (_Shape) {
 	  _inherits(Node, _Shape);
@@ -44433,7 +44433,7 @@
 	        cloneProps.color = child.props.color || props.fill || window.TEXT_DEFAULT_COLOR;
 	      }
 	
-	      return _react2.default.cloneElement(child, cloneProps);
+	      return _react2["default"].cloneElement(child, cloneProps);
 	    }
 	  }, {
 	    key: 'render',
@@ -44443,24 +44443,24 @@
 	      var children = _props.children;
 	      var key = _props.key;
 	
-	      return _react2.default.createElement(
+	      return _react2["default"].createElement(
 	        Group,
 	        { className: 'node' },
-	        _react2.default.Children.map(children, this.renderTreeNode, this)
+	        _react2["default"].Children.map(children, this.renderTreeNode, this)
 	      );
 	    }
 	  }]);
 	
 	  return Node;
-	}(_Shape3.default);
+	}(_Shape3["default"]);
 	
 	Node.propTypes = {
-	  width: _react2.default.PropTypes.any.isRequired,
-	  height: _react2.default.PropTypes.any.isRequired,
-	  margin: _react2.default.PropTypes.any.isRequired
+	  width: _react2["default"].PropTypes.any.isRequired,
+	  height: _react2["default"].PropTypes.any.isRequired,
+	  margin: _react2["default"].PropTypes.any.isRequired
 	};
 	
-	exports.default = Node;
+	exports["default"] = Node;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44479,7 +44479,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -44512,9 +44512,9 @@
 	  }]);
 	
 	  return Shape;
-	}(_react2.default.Component);
+	}(_react2["default"].Component);
 	
-	exports.default = Shape;
+	exports["default"] = Shape;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44541,7 +44541,7 @@
 	
 	var _Circle2 = _interopRequireDefault(_Circle);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -44568,14 +44568,14 @@
 	      var fill = _props.fill;
 	      var stroke = _props.stroke;
 	
-	      return _react2.default.createElement(_Circle2.default, { radius: Number(radius), fill: fill, stroke: stroke });
+	      return _react2["default"].createElement(_Circle2["default"], { radius: Number(radius), fill: fill, stroke: stroke });
 	    }
 	  }]);
 	
 	  return Circle;
-	}(_Shape3.default);
+	}(_Shape3["default"]);
 	
-	exports.default = Circle;
+	exports["default"] = Circle;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44663,7 +44663,7 @@
 	
 	var _Rectangle2 = _interopRequireDefault(_Rectangle);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -44671,8 +44671,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Transform = _reactArt2.default.Transform;
-	var ArtText = _reactArt2.default.Text;
+	var Transform = _reactArt2["default"].Transform;
+	var ArtText = _reactArt2["default"].Text;
 	
 	var Text = function (_Shape) {
 	  _inherits(Text, _Shape);
@@ -44693,7 +44693,7 @@
 	      var color = _props.color;
 	
 	      var textTransform = new Transform().translate(offset[0], offset[1]);
-	      return _react2.default.createElement(
+	      return _react2["default"].createElement(
 	        ArtText,
 	        { transform: textTransform, fill: color,
 	          font: { fontSize: 10, fontWeight: 100 }
@@ -44704,12 +44704,12 @@
 	  }]);
 	
 	  return Text;
-	}(_Shape3.default);
+	}(_Shape3["default"]);
 	
 	Text.defaultProps = {
 	  offset: [0, 0]
 	};
-	exports.default = Text;
+	exports["default"] = Text;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44854,7 +44854,7 @@
 	
 	var _Shape3 = _interopRequireDefault(_Shape2);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -44862,7 +44862,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Group = _reactArt2.default.Group;
+	var Group = _reactArt2["default"].Group;
 	
 	
 	function noop() {}
@@ -44891,10 +44891,10 @@
 	        strokeWidth: 2
 	      };
 	
-	      return _react2.default.createElement(
+	      return _react2["default"].createElement(
 	        Group,
 	        null,
-	        _react2.default.createElement(_Rectangle2.default, {
+	        _react2["default"].createElement(_Rectangle2["default"], {
 	          width: '170',
 	          height: '40',
 	          fill: blueStyle.fill
@@ -44905,9 +44905,9 @@
 	  }]);
 	
 	  return Rect;
-	}(_Shape3.default);
+	}(_Shape3["default"]);
 	
-	exports.default = Rect;
+	exports["default"] = Rect;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44924,13 +44924,13 @@
 	
 	var _cluster2 = _interopRequireDefault(_cluster);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	var layout = {
-	  cluster: _cluster2.default
+	  cluster: _cluster2["default"]
 	};
 	
-	exports.default = layout;
+	exports["default"] = layout;
 	module.exports = exports['default'];
 
 /***/ },
@@ -44943,7 +44943,7 @@
 	  value: true
 	});
 	
-	exports.default = function () {
+	exports["default"] = function () {
 	  function cluster(root) {
 	    var previousNode = void 0;
 	    var x = 0;
@@ -44999,7 +44999,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function clusterX(children) {
 	  return children.reduce(function (x, child) {
@@ -45008,7 +45008,7 @@
 	}
 	
 	function clusterY(children) {
-	  return 1 + _lodash2.default.max(children.map(function (child) {
+	  return 1 + _lodash2["default"].max(children.map(function (child) {
 	    return child.y;
 	  }));
 	}
