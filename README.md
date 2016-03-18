@@ -8,11 +8,7 @@ React Spider Component
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-spider)](https://saucelabs.com/u/rc-spider)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-spider.svg)](https://saucelabs.com/u/rc-spider)
 
 [npm-image]: http://img.shields.io/npm/v/rc-spider.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-spider
@@ -27,16 +23,9 @@ React Spider Component
 [download-image]: https://img.shields.io/npm/dm/rc-spider.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-spider
 
-
-## Browser Support
-
-|![IE](https://raw.github.com/alrra/browser-logos/master/internet-explorer/internet-explorer_48x48.png) | ![Chrome](https://raw.github.com/alrra/browser-logos/master/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/firefox/firefox_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/safari/safari_48x48.png)|
-| --- | --- | --- | --- | --- |
-| IE 8+ ✔ | Chrome 31.0+ ✔ | Firefox 31.0+ ✔ | Opera 30.0+ ✔ | Safari 7.0+ ✔ |
-
 ## Screenshots
 
-<img src="" width="288"/>
+<img src="https://img.alicdn.com/tps/TB1NVsALVXXXXXZaXXXXXXXXXXX-1620-1334.jpg" width="288"/>
 
 
 ## Development
@@ -52,11 +41,6 @@ http://localhost:8000/examples/
 
 
 online example: http://react-component.github.io/spider/
-
-
-## Feature
-
-* support ie8,ie8+,chrome,firefox,safari
 
 
 ## install
