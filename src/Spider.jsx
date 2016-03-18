@@ -1,13 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import SpiderBase from './lib/SpiderBase';
+import SpiderBase from './lib/SpiderBase.jsx';
 import Shape, { Link, Node, Circle, Rect } from './shapes';
-import util, { flat2Tree, searchNode } from './util';
+import ReactART from 'react-art';
+const Group = ReactART.Group;
+const Transform = ReactART.Transform;
+const Surface = ReactART.Surface;
+
 import layout from './layout';
 import _ from 'lodash';
 
 function noop() {}
 function defaultNodeCreator(data) {
-  return (<Node margin="10" width="20" height="20" entry_radius="0" exit_radius="0" data={data}>
+  return (<Node margin="10" width="20" height="20" data={data}>
     <Circle />
   </Node>);
 }
@@ -21,13 +25,16 @@ function defaultProjection(element) {
 }
 
 function defaultTransform(element) {
-  return `translate(${element.x}, ${element.y})`;
+  return new Transform().translate(element.x, element.y);
 }
 
 class Spider extends SpiderBase {
   constructor(props) {
     super(props);
-    const { nodes, links } = this.loadDataSource(props.dataSource, props.nodeCreator, props.linkCreator);
+    const { nodes, links } = this.loadDataSource(
+      props.dataSource,
+      props.nodeCreator,
+      props.linkCreator);
     this.state = {
       dataSource: props.dataSource,
       nodes,
@@ -59,7 +66,10 @@ class Spider extends SpiderBase {
 
   componentWillReceiveProps(nextProps) {
     const { dataSource } = nextProps;
-    const { nodes, links } = this.loadDataSource(dataSource, nextProps.nodeCreator, nextProps.linkCreator);
+    const { nodes, links } = this.loadDataSource(
+      dataSource,
+      nextProps.nodeCreator,
+      nextProps.linkCreator);
     this.setState({
       dataSource,
       nodes,
@@ -138,37 +148,44 @@ class Spider extends SpiderBase {
 
   renderNodes() {
     const nodes = this.state.nodes;
-    const { nodeCreator, projection , transform } = this.props;
-    return nodes.map( (node, idx) => {
+    const { nodeCreator, projection, transform } = this.props;
+    return nodes.map((node, idx) => {
       const projectedNode = projection(node);
-      const transformMatrix = transform({
-        x: projectedNode[0],
-        y: projectedNode[1]
-      });
-      return <g className="node" key={`node-${idx}`} transform={transformMatrix} >
+      let groupTransform;
+      if (transform) {
+        groupTransform = transform({
+          x: projectedNode[0],
+          y: projectedNode[1],
+        });
+      } else {
+        groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
+      }
+      return (<Group className="node" key={`node-${idx}`} transform={groupTransform} >
         { node._display ? nodeCreator(node) : null }
-      </g>;
+      </Group>);
     });
   }
   renderLinks() {
     const links = this.state.links;
     const { linkCreator, projection } = this.props;
-    return links.map((linkArray, idx) => {
-      return (<g id={idx}>{React.Children.map(linkArray.map(link => {
-        return linkCreator(link);
-      }), this.passProjection, this)}</g>);
-    });
+    return links.map((linkArray, idx) =>
+      React.Children.map(linkArray.map(link =>
+        linkCreator(link)
+      ), this.passProjection, this)
+    );
   }
   passProjection(child, index) {
     const { props } = child;
     const cloneProps = {
       data: props.data,
       projection: props.projection || this.props.projection,
+      stroke: child.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
+      strokeWidth: child.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH,
     };
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { width, height, offset, transform} = this.props;
+    const { width, height, offset, transform } = this.props;
     const { left, top } = this.state;
 
     const offsetLeft = offset && offset[0] || 0;
@@ -176,20 +193,21 @@ class Spider extends SpiderBase {
     const nodes = this.renderNodes();
     const links = this.renderLinks();
 
+    const groupTransform = new Transform().translate(left + offsetLeft, top + offsetTop);
     // node width
-    return (<svg width={width} height={height} ref="canvas">
-      <g transform={`translate(${left + offsetLeft},${top + offsetTop})`}>
+    return (<Surface width={width} height={height} ref="canvas">
+      <Group transform={groupTransform}>
         {React.Children.map(links, this.passProjection, this)}
         {nodes}
-      </g>
-    </svg>);
+      </Group>
+    </Surface>);
   }
 }
 
 Spider.propTypes = {
-  offset: PropTypes.array, // Õû¸öÍ¼µÄÆ«ÒÆ
-  transform: PropTypes.func, // Ö¸¶¨ node µÄ transform
-  projection: PropTypes.func, // Ö¸¶¨Ò»¸ö node ºÍ link µÄÓ³Éäº¯Êı
+  offset: PropTypes.array, // æ•´ä¸ªå›¾çš„åç§»
+  transform: PropTypes.func, // æŒ‡å®š node çš„ transform
+  projection: PropTypes.func, // æŒ‡å®šä¸€ä¸ª node å’Œ link çš„æ˜ å°„å‡½æ•°
   startX: PropTypes.number,
   startY: PropTypes.number,
   enableDrag: PropTypes.bool,
@@ -207,11 +225,11 @@ Spider.defaultProps = {
   projection: defaultProjection,
   transform: defaultTransform,
   nodeCreator: defaultNodeCreator,
-  linkCreator: defaultLinkCreator
+  linkCreator: defaultLinkCreator,
 };
 
 Spider.Shape = Shape;
-Spider.util = util;
 Spider.layout = layout;
+Spider.Transform = Transform;
 
 export default Spider;

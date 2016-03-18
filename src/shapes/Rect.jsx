@@ -1,55 +1,30 @@
 import React, { Component, PropTypes } from 'react';
+import ReactART from 'react-art';
+import Rectangle from 'react-art/lib/Rectangle.art';
+const Group = ReactART.Group;
 import Shape from './Shape';
 
 function noop() {}
 
 class Rect extends Shape {
-  constructor(props) {
-    super(props);
-  }
-  handleClick(data) {
-    console.log("data", data);
-  }
-
-  //onDoubleClick
-  handleDblClick(data) {
-      console.log("dbl data", data);
-  }
-
   render() {
-    const { data, text, type} = this.props;
+    const { data, text, type } = this.props;
     const onClick = this.props.onClick || noop;
     const blueStyle = {
-      fill:'#37A7D0',
-      stroke:'#1B8EB7',
+      fill: '#37A7D0',
+      stroke: '#1B8EB7',
       strokeWidth: 2,
     };
 
-    const redStyle = {
-      fill:'#F36D18',
-      stroke:'#DA5400',
-      strokeWidth: 2,
-    };
-
-    const textStyle = {
-      style: {
-        fontSize: '13px',
-      },
-      dy: '.35em',
-      fill: '#ffffff',
-      textAnchor: 'middle',
-    };
-    return <g onClick={onClick.bind(this, data)}>
-      <rect
+    return (<Group>
+      <Rectangle
         width="170"
-          height="40"
-          style={type === 'blue' ?  blueStyle : redStyle }
+        height="40"
+        fill={blueStyle.fill}
       />
-      <text transform={'translate(' + 170 / 2 + ',' + 20 + ')'} {...textStyle}>{text}</text>
       {this.props.children}
-    </g>
+    </Group>);
   }
 }
 
 export default Rect;
-

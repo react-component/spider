@@ -1,52 +1,38 @@
 import { Map } from 'immutable';
 import Node from '../lib/Node';
-import uuid from 'uuid';
-
-/**
- * dataLoader
- * @param data
- */
-export default function dataLoader(data, spider) {
-  if (Array.isArray(data)) {
-    return loadArrayData(data, spider);
-  }
-  return loadStructuralData(data, spider);
-}
-
 /**
  * loadArrayData
- * 加载数组形式的数据
  * @param data
  * @returns {{nodes: *, links: *}}
  */
-function loadArrayData(data, spider) {
+function loadArrayData(arr, spider) {
   const nodeMap = {};
   const linkMap = {};
   // 把所有节点放置到map里
-  data.forEach(d => {
-    nodeMap[d.id] = new Node(d, spider);
+  arr.forEach(data => {
+    nodeMap[data.id] = new Node(data, spider);
   });
 
-  data.forEach(d => {
-    const currentNode = nodeMap[d.id];
-    if (nodeMap[d.id] && nodeMap[d.parent]) {
-      const parentNode = nodeMap[d.parent];
+  arr.forEach(data => {
+    const currentNode = nodeMap[data.id];
+    if (nodeMap[data.id] && nodeMap[data.parent]) {
+      const parentNode = nodeMap[data.parent];
 
-      if (!linkMap[d.parent]) {
-        linkMap[d.parent] = [];
+      if (!linkMap[data.parent]) {
+        linkMap[data.parent] = [];
       }
-      linkMap[d.parent].push({
+      linkMap[data.parent].push({
         source: parentNode,
         target: currentNode,
       });
-      parentNode.__outDegree += 1
+      parentNode.__outDegree += 1;
       parentNode.children.push(currentNode);
       currentNode.__inDegree += 1;
     }
   });
   return {
-    nodes: Map(nodeMap),
-    links: Map(linkMap),
+    nodes: new Map(nodeMap),
+    links: new Map(linkMap),
   };
 }
 
@@ -59,13 +45,10 @@ function loadArrayData(data, spider) {
 function loadStructuralData(data, spider) {
   const nodeMap = {};
   const linkMap = {};
-  let currentData = data;
-  let parentNode = null;
+  const currentData = data;
 
-  readNode(currentData, parentNode);
-
-  function readNode(data, parent) {
-    const node = new Node(data, spider);
+  function readNode(nodeData, parent) {
+    const node = new Node(nodeData, spider);
 
     nodeMap[node.id] = node;
 
@@ -74,25 +57,34 @@ function loadStructuralData(data, spider) {
         linkMap[parent.id] = [];
       }
       linkMap[parent.id].push({
-        source:parent,
+        source: parent,
         target: node,
-
       });
-      parent.__outDegree +=1;
+      parent.__outDegree += 1;
       parent.children.push(node);
       node.__inDegree += 1;
     }
 
-    if (data.children && data.children.length) {
-      data.children.forEach( d => {
-        readNode(d, node);
+    if (nodeData.children && nodeData.children.length) {
+      nodeData.children.forEach(child => {
+        readNode(child, nodeData);
       });
     }
   }
+
+  readNode(currentData);
   return {
-    nodes: Map(nodeMap),
-    links: Map(linkMap),
+    nodes: new Map(nodeMap),
+    links: new Map(linkMap),
   };
 }
-
-
+/**
+ * dataLoader
+ * @param data
+ */
+export default function dataLoader(data, spider) {
+  if (Array.isArray(data)) {
+    return loadArrayData(data, spider);
+  }
+  return loadStructuralData(data, spider);
+}

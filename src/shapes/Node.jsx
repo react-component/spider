@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Shape from './Shape';
+import Circle from './Circle.jsx';
+import ReactART from 'react-art';
+const Group = ReactART.Group;
 
 class Node extends Shape {
   constructor(props) {
@@ -19,17 +22,27 @@ class Node extends Shape {
   renderTreeNode(child, index) {
     const props = this.props;
     const cloneProps = {
-      key: child.key || index,
-      width: child.width || props.width,
-      height: child.height || props.height,
+      key: child.props.key || index,
+      width: child.props.width || props.width,
+      height: child.props.height || props.height,
+      fill: child.props.fill || props.fill || window.NODE_DEFAULT_FILL,
+      stroke: child.props.stroke || props.stroke || window.NODE_DEFAULT_STROKE,
+      strokeWidth: child.props.strokeWidth || props.strokeWidth || window.NODE_DEFAULT_STROKE_WIDTH,
     };
+    if (child.type.name === 'Circle') {
+      cloneProps.radius = child.props.radius || Math.min(cloneProps.width, cloneProps.height);
+    }
+    if (child.type.name === 'Text') {
+      cloneProps.color = child.props.color || props.fill || window.TEXT_DEFAULT_COLOR;
+    }
+
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { data, children, key} = this.props;
-    return (<g className="node">
+    const { data, children, key } = this.props;
+    return (<Group className="node">
       {React.Children.map(children, this.renderTreeNode, this)}
-    </g>);
+    </Group>);
   }
 }
 
@@ -37,6 +50,6 @@ Node.propTypes = {
   width: React.PropTypes.any.isRequired,
   height: React.PropTypes.any.isRequired,
   margin: React.PropTypes.any.isRequired,
-}
+};
 
 export default Node;

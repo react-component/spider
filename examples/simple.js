@@ -7,13 +7,12 @@ import ReactDOM from 'react-dom';
 
 const width = 960;
 const height = 2200;
-
 const { Node, Circle, Text} = Spider.Shape;
 
 const nodeCreator = function (data) {
-  return (<Node width="20" height="20">
+  return (<Node width="4.5" height="4.5">
     <Circle />
-    <Text offset={[8, 3]}>{data.name}</Text>
+    <Text offset={[8, 3]} color="red">{data.name}</Text>
   </Node>);
 }
 

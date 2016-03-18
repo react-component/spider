@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import {diagonal, projection} from '../lib/Util';
+import ReactART from 'react-art';
+const Group = ReactART.Group;
+const Text = ReactART.Text;
+const Shape = ReactART.Shape;
+import { diagonal } from '../lib/Util';
 import _ from 'lodash';
-import Shape from './Shape';
 
 class Link extends Component {
   render() {
-    const { type, projection } = this.props;
-    const rectW = 170,
-    rectH = 40;
+    const { projection } = this.props;
 
     const theme = {
       line: {
@@ -15,30 +16,27 @@ class Link extends Component {
         stroke: '#ABABAB',
         strokeWidth: '1px',
       },
-      text: {
-        x: Math.sqrt(Math.pow((this.props.data.target.i_y - this.props.data.source.o_y) / 2, 2) + Math.pow((this.props.data.target.i_x - this.props.data.source.o_x) / 2, 2)),
-        fontFamily: 'Arial, Helvetica, sans-serif',
-        fill: '#ABABAB',
-        fontSize: '12',
-        dy: '-.35em',
-      },
     };
 
-    const { data, text } = this.props;
+    const { data, text, stroke, strokeWidth } = this.props;
     // default theme style
     const pathId = _.uniqueId('link_path_');
-    return <g key={pathId} >
-      <path className='link' id={pathId} d={diagonal(data, projection)}
-        {...theme.line} />
-      <text {...theme.text} textAnchor="middle">
-        <textPath xlinkHref={'#' + pathId }>{text}</textPath>
-      </text>
-    </g>
+    const path = diagonal(data, projection);
+    return (<Group key={pathId} >
+      <Shape d={path} stroke={stroke} strokeWidth={strokeWidth} />
+      <Text {...theme.text} textAnchor="middle" path={path}>
+        {text}
+      </Text>
+    </Group>);
   }
 }
 
 Link.propTypes = {
   projection: PropTypes.func,
-}
+  data: PropTypes.object,
+  text: PropTypes.string,
+  stroke: PropTypes.string,
+  strokeWidth: PropTypes.string,
+};
 
 export default Link;

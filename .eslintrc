@@ -2,8 +2,10 @@
   "extends": "eslint-config-airbnb",
   "rules": {
     "no-unused-vars": 0,
+    "no-cond-assign": 0,
+    "no-param-reassign": 0,
     "no-unused-expressions": [2, {"allowShortCircuit": true, "allowTernary": true}],
-    "id-length": [2, {"min": 2, "max": 64, "properties": "always", "exceptions": ["_", "e", "i", "j", "k"]}],
+    "id-length": [2, {"min": 2, "max": 64, "properties": "always", "exceptions": ["_", "e", "i", "j", "k","x", "y"]}],
     "indent": [2, 2, {"SwitchCase": 1}]
   }
 }

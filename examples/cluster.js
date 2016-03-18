@@ -10,14 +10,14 @@ const height = 800;
 const rx = width / 2;
 const ry = height / 2;
 
-const { Node, Circle, Text, Link} = Spider.Shape;
+const { Node, Circle, Text, Link } = Spider.Shape;
 
 function nodeCreator(data) {
-  return (<Node width="20" height="20">
+  return (<Node width="4.5" height="4.5">
     <Circle />
     <Text offset={[8, 3]}
-          textAnthor={data.x < 180 ? 'start' : 'end'}
-          transform={data.x < 180 ? null : 'rotate(180)' }
+      textAnthor={data.x < 180 ? 'start' : 'end'}
+      transform={data.x < 180 ? null : new Spider.Transform().rotate(180) }
     >{data.name}</Text>
   </Node>);
 }
@@ -42,7 +42,7 @@ fetch(data).then(response => response.json())
     const data = cluster.data(tree);
     ReactDOM.render(<Spider width={width} height={height} dataSource={data}
                             offset={[rx, ry]}
-                            transform={d=> `rotate(${d.x - 90})translate(${d.y})`}
+                            transform={d => new Spider.Transform().rotate(d.x - 90).translate(d.y)}
                             nodeCreator={nodeCreator}
                             linkCreator={linkCreator}
     />, document.getElementById('__react-content'));

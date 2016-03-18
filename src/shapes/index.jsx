@@ -9,5 +9,5 @@ export default {
   Node,
   Circle,
   Rect,
-  Text
-}
+  Text,
+};
