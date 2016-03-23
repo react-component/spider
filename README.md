@@ -1,8 +1,7 @@
 # rc-spider
 ---
 
-React Spider Component
-
+React Spider Component Custom fork
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
