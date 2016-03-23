@@ -16,7 +16,6 @@ class SpiderBase extends React.Component {
    * @param attributes
    */
   updateNode(targetNode, attributes) {
-    const data = this.__data;
     const nodes = this.__data.nodes;
     const nodeToUpdate = nodes.get(targetNode.id);
     Object.assign(nodeToUpdate.__data, attributes);
@@ -40,7 +39,6 @@ class SpiderBase extends React.Component {
   }
 
   layout() {
-    const root = this.getTreeRoot();
     this.normalizeNodes();
   }
 

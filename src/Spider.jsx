@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import SpiderBase from './base/SpiderBase.jsx';
-import Shape, { Link, Node, Circle, Rect } from './shapes';
+import Shape, { Link, Node, Circle } from './shapes';
 import ReactART from 'react-art';
 const Group = ReactART.Group;
 const Transform = ReactART.Transform;
@@ -9,7 +9,6 @@ const Surface = ReactART.Surface;
 import layout from './layout';
 import _ from 'lodash';
 
-function noop() {}
 function defaultNodeCreator(data) {
   return (<Node margin="10" width="20" height="20" data={data}>
     <Circle />
@@ -120,20 +119,8 @@ class Spider extends SpiderBase {
     }
   }
 
-  /**
-   * return node[s] from dataSource , filter by condition..
-   * e.g. :
-   * spider.select({id: 1}); // return node[s] that id=1
-   * spider.select({_children: 2}); // return node[s] that has 2 children
-   * multi conditions will return intersection
-   * @param condition
-   */
-  select(condition) {
-
-  }
-
   toggleChild(node) {
-    return (ev) => {
+    return () => {
       const nodes = this.updateNode(node, {
         expand: !node.expand,
       });
@@ -167,14 +154,14 @@ class Spider extends SpiderBase {
   }
   renderLinks() {
     const links = this.state.links;
-    const { linkCreator, projection } = this.props;
-    return links.map((linkArray, idx) =>
+    const { linkCreator } = this.props;
+    return links.map((linkArray) =>
       React.Children.map(linkArray.map(link =>
         linkCreator(link)
       ), this.passProjection, this)
     );
   }
-  passProjection(child, index) {
+  passProjection(child) {
     const { props } = child;
     const cloneProps = {
       data: props.data,
@@ -185,7 +172,7 @@ class Spider extends SpiderBase {
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { width, height, offset, transform } = this.props;
+    const { width, height, offset } = this.props;
     const { left, top } = this.state;
 
     const offsetLeft = offset && offset[0] || 0;

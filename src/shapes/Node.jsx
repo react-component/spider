@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import Shape from './Shape';
-import Circle from './Circle.jsx';
 import ReactART from 'react-art';
 const Group = ReactART.Group;
 
@@ -39,7 +38,7 @@ class Node extends Shape {
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { data, children, key } = this.props;
+    const { children } = this.props;
     return (<Group className="node">
       {React.Children.map(children, this.renderTreeNode, this)}
     </Group>);
@@ -47,9 +46,9 @@ class Node extends Shape {
 }
 
 Node.propTypes = {
-  width: React.PropTypes.any.isRequired,
-  height: React.PropTypes.any.isRequired,
-  margin: React.PropTypes.any.isRequired,
+  width: PropTypes.any.isRequired,
+  height: PropTypes.any.isRequired,
+  margin: PropTypes.any.isRequired,
 };
 
 export default Node;

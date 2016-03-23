@@ -1,6 +1,6 @@
 {
   "name": "rc-spider",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "spider ui component for react",
   "keywords": [
     "react",
@@ -53,7 +53,6 @@
     "lint"
   ],
   "dependencies": {
-    "events": "^1.1.0",
     "immutable": "^3.7.6",
     "lodash": "^4.6.1",
     "react-art": "^0.14.0",
