@@ -4,7 +4,6 @@ const Group = ReactART.Group;
 const Text = ReactART.Text;
 const Shape = ReactART.Shape;
 import { diagonal } from '../base/Util';
-import _ from 'lodash';
 
 class Link extends Component {
   render() {
@@ -19,8 +18,9 @@ class Link extends Component {
     };
 
     const { data, text, stroke, strokeWidth } = this.props;
+    const { source, target } = data;
     // default theme style
-    const pathId = _.uniqueId('link_path_');
+    const pathId = `link-path-${source.id}-${target.id}`;
     const path = diagonal(data, projection);
     return (<Group key={pathId} >
       <Shape d={path} stroke={stroke} strokeWidth={strokeWidth} />

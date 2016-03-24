@@ -10,13 +10,14 @@ const ry = height / 2;
 
 const { Node, Circle, Text, Link } = Spider.Shape;
 
+function onClick(d, e) {
+  console.log('>> onClick', this);
+}
+
 function nodeCreator(data) {
-  return (<Node width="4.5" height="4.5">
-    <Circle />
-    <Text offset={[8, 3]}
-      textAnthor={data.x < 180 ? 'start' : 'end'}
-      transform={data.x < 180 ? null : new Spider.Transform().rotate(180) }
-    >{data.name}</Text>
+  return (<Node width="4.5" height="4.5"  >
+    <Circle onClick={onClick} />
+    <Text offset={[8, 3]}>{data.name}</Text>
   </Node>);
 }
 

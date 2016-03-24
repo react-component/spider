@@ -4,8 +4,11 @@ import ArtCircle from 'react-art/lib/Circle.art';
 
 class Circle extends Shape {
   render() {
-    const { radius, fill, stroke } = this.props;
-    return (<ArtCircle radius={Number(radius)} fill={fill} stroke={stroke} />);
+    const { radius, fill, stroke, strokeWidth, onClick } = this.props;
+    return (<ArtCircle radius={Number(radius)} fill={fill}
+      stroke={stroke} strokeWidth={strokeWidth}
+      onClick={onClick}
+    />);
   }
 }
 

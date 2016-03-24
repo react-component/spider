@@ -63,6 +63,13 @@ class Spider extends SpiderBase {
     };
   }
 
+  update(id, newNode) {
+    const { nodes } = this.state;
+    const updatedNodes = nodes.set(id, newNode);
+    this.setState({
+      nodes: updatedNodes,
+    });
+  }
   componentWillReceiveProps(nextProps) {
     const { dataSource } = nextProps;
     const { nodes, links } = this.loadDataSource(
@@ -75,7 +82,6 @@ class Spider extends SpiderBase {
       links,
     });
   }
-
   enableDrag(ev) {
     const position = (ev.targetTouches && ev.targetTouches[0]) || ev;
 
@@ -155,10 +161,12 @@ class Spider extends SpiderBase {
   renderLinks() {
     const links = this.state.links;
     const { linkCreator } = this.props;
-    return links.map((linkArray) =>
-      React.Children.map(linkArray.map(link =>
-        linkCreator(link)
-      ), this.passProjection, this)
+    return links.map((linkArray, idx) =>
+      <Group key={`link-${idx}`} >
+        {React.Children.map(linkArray.map(link =>
+          linkCreator(link)
+        ), this.passProjection, this)}
+      </Group>
     );
   }
   passProjection(child) {

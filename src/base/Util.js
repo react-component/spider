@@ -18,10 +18,7 @@ export function diagonal(link, projection) {
 }
 
 export function separation(left, right) {
-  if (!left.parent || !right.parent) {
-    return 2;
-  }
-  return left.parent.id === right.parent.id ? 1 : 2;
+  return left.parent === right.parent ? 1 : 2;
 }
 
 export function hierarchyVisitAfter(node, callback) {
@@ -30,9 +27,11 @@ export function hierarchyVisitAfter(node, callback) {
 
   while (nodes.length) {
     const currentNode = nodes.pop();
+    currentNode.__level__ = currentNode.parent ? currentNode.parent.__level__ + 1 : 0;
     nodes2.push(currentNode);
     if (currentNode.children && currentNode.children.length) {
       for (let i = 0; i < currentNode.children.length; i++) {
+        currentNode.children[i].parent = currentNode;
         nodes.push(currentNode.children[i]);
       }
     }
