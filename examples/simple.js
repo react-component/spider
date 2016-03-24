@@ -8,9 +8,13 @@ const height = 2200;
 const { Node, Circle, Text} = Spider.Shape;
 
 const nodeCreator = function (data) {
-  return (<Node width="4.5" height="4.5">
+  return (<Node width="4.5" height="4.5" onClick={() => {
+      data.set({
+        name: data.name + '!'
+      });
+  }}>
     <Circle />
-    <Text offset={[8, 3]} color="red">{data.name}</Text>
+    <Text offset={[8, -5]} color="red">{data.name}</Text>
   </Node>);
 }
 

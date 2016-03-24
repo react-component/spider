@@ -108,8 +108,13 @@ class Node {
     return this.__data[key];
   }
 
-  set(key, value) {
-    this.__data[key] = value;
+  set(target) {
+    // avoid to modify id of node
+    if (target.id) {
+      delete target.id;
+    }
+    Object.assign(this, target);
+    this.__spider.update(this.id, this);
   }
 }
 

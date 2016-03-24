@@ -6,9 +6,10 @@ const ArtText = ReactART.Text;
 
 class Text extends Shape {
   render() {
-    const { offset, children, color } = this.props;
-    const textTransform = new Transform().translate(offset[0], offset[1]);
+    const { offset, children, color, transform, textAnchor } = this.props;
+    const textTransform = transform || new Transform().translate(offset[0], offset[1]);
     return (<ArtText transform={textTransform} fill={color}
+      style={{ textAnchor: textAnchor || 'start' }}
       font={{ fontSize: 10, fontWeight: 100 }}
     >
       {children}

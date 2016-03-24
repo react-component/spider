@@ -4,20 +4,6 @@ import ReactART from 'react-art';
 const Group = ReactART.Group;
 
 class Node extends Shape {
-  constructor(props) {
-    super(props);
-    if (isNaN(Number(props.width))) {
-      console.warn('Warning: 必须给 Node 指定一个有效的 width , 否则自动布局可能会出问题.');
-    }
-    if (isNaN(Number(props.height))) {
-      console.warn('Warning: 必须给 Node 指定一个有效的 height , 否则自动布局可能会出问题.');
-    }
-    // if (isNaN(Number(props.margin))) {
-    //   console.warn(`Warning: 必须给 Node 指定一个有效的 margin , 否则自动布局可能会出问题.
-    //   Spider 会使用一个默认的 margin (Max(width, height) / 5) 来进行自动布局.
-    //   您可以通过 Spider.setGlobalConfig("GLOBAL_MARGIN", "数值") 来指定全局的默认 margin`);
-    // }
-  }
   renderTreeNode(child, index) {
     const props = this.props;
     const cloneProps = {
@@ -38,8 +24,8 @@ class Node extends Shape {
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { children } = this.props;
-    return (<Group className="node">
+    const { children, onClick } = this.props;
+    return (<Group className="node" onClick={onClick}>
       {React.Children.map(children, this.renderTreeNode, this)}
     </Group>);
   }
