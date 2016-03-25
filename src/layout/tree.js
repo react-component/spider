@@ -5,10 +5,6 @@ function clusterX(children) {
   return children.reduce((x, child) => x + child.x, 0) / children.length;
 }
 
-function clusterY(children) {
-  return 1 + _.max(children.map(child => child.y));
-}
-
 function clusterLeft(node) {
   const children = node.children;
   return children && children.length ? clusterLeft(children[0]) : node;
@@ -20,31 +16,33 @@ function clusterRight(node) {
 }
 
 export default function () {
-  function cluster(root) {
+  function tree(root) {
     let previousNode;
     let x = 0;
-    const size = cluster.size;
-    const projectionFunc = cluster.projectionFunc;
+    let maxDeep = 0;
+    const size = tree.size;
+    const projectionFunc = tree.projectionFunc;
 
-    hierarchyVisitAfter(root, (node) => {
+    hierarchyVisitAfter(root, node => {
       const children = node.children;
       if (children && children.length) {
         node.x = clusterX(children);
-        node.y = clusterY(children);
+        node.y = node.__level__ * 1;
+        maxDeep = _.max([maxDeep, node.__level__ + 1]);
+        console.log('>> maxDeep', node);
       } else {
         node.x = previousNode ? x += separation(node, previousNode) : 0;
-        node.y = 0;
+        node.y = node.__level__ * 1;
         previousNode = node;
       }
     });
-
     const left = clusterLeft(root);
     const right = clusterRight(root);
     const x0 = left.x - separation(left, right) / 2;
     const x1 = right.x + separation(right, left) / 2;
     hierarchyVisitAfter(root, (node) => {
       node.x = (node.x - x0) / (x1 - x0) * size[0];
-      node.y = (1 - (root.y ? node.y / root.y : 1)) * size[1];
+      node.y = (node.y ? node.y / maxDeep : 0) * size[1];
 
       // projection ..
       if (projectionFunc) {
@@ -56,15 +54,15 @@ export default function () {
     return root;
   }
 
-  cluster.size = function size(sizeArray) {
-    cluster.size = sizeArray;
-    return cluster;
+  tree.size = function size(sizeArray) {
+    tree.size = sizeArray;
+    return tree;
   };
 
-  cluster.projection = function (projectionFunc) {
+  tree.projection = function (projectionFunc) {
     this.projectionFunc = projectionFunc;
-    return cluster;
+    return tree;
   };
-  cluster.data = cluster;
-  return cluster;
+  tree.data = tree;
+  return tree;
 }
