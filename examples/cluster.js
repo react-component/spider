@@ -37,7 +37,7 @@ const data = new Request('./flare.json');
 fetch(data).then(response => response.json())
   .then(response => {
     const tree = response;
-    const cluster = Spider.layout.clustrter().size([360, ry - 120]);
+    const cluster = Spider.layout.cluster().size([360, ry - 120]);
     const data = cluster.data(tree);
     ReactDOM.render(<Spider width={width} height={height} dataSource={data}
                             offset={[rx, ry]}
