@@ -1,5 +1,6 @@
 import { hierarchyVisitAfter, separation } from '../base/Util';
 import _ from 'lodash';
+import LayoutBase from './base';
 
 function clusterX(children) {
   return children.reduce((x, child) => x + child.x, 0) / children.length;
@@ -19,12 +20,12 @@ function clusterRight(node) {
   return children && children.length ? clusterRight(children[children.length - 1]) : node;
 }
 
-export default function () {
-  function cluster(root) {
+class Cluster extends LayoutBase {
+  data(root) {
     let previousNode;
     let x = 0;
-    const size = cluster.size;
-    const projectionFunc = cluster.projectionFunc;
+    const size = this.size;
+    const projectionFunc = this.projectionFunc;
 
     hierarchyVisitAfter(root, (node) => {
       const children = node.children;
@@ -55,16 +56,6 @@ export default function () {
     });
     return root;
   }
-
-  cluster.size = function size(sizeArray) {
-    cluster.size = sizeArray;
-    return cluster;
-  };
-
-  cluster.projection = function (projectionFunc) {
-    this.projectionFunc = projectionFunc;
-    return cluster;
-  };
-  cluster.data = cluster;
-  return cluster;
 }
+
+export default Cluster;

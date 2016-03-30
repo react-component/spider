@@ -142,7 +142,7 @@ class Spider extends SpiderBase {
   renderNodes() {
     const nodes = this.state.nodes;
     const { nodeCreator, projection, transform } = this.props;
-    return nodes.map((node, idx) => {
+    return nodes.valueSeq().map((node, idx) => {
       const projectedNode = projection(node);
       let groupTransform;
       if (transform) {
@@ -161,7 +161,7 @@ class Spider extends SpiderBase {
   renderLinks() {
     const links = this.state.links;
     const { linkCreator } = this.props;
-    return links.map((linkArray, idx) =>
+    return links.valueSeq().map((linkArray, idx) =>
       <Group key={`link-${idx}`} >
         {React.Children.map(linkArray.map(link =>
           linkCreator(link)

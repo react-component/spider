@@ -1,9 +1,9 @@
-import cluster from './cluster';
-import tree from './tree';
+const layout = {};
 
-const layout = {
-  cluster,
-  tree,
-};
+['cluster', 'tree'].forEach(item => {
+  const LayoutClass = require(`./${item}`);
+  layout[item] = () => new LayoutClass();
+});
+
 
 export default layout;

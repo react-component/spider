@@ -34,7 +34,6 @@ class Node extends Shape {
 Node.propTypes = {
   width: PropTypes.any.isRequired,
   height: PropTypes.any.isRequired,
-  margin: PropTypes.any.isRequired,
 };
 
 export default Node;
