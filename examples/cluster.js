@@ -21,7 +21,7 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(216);
+	var _reactDom = __webpack_require__(218);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -75,7 +75,7 @@ webpackJsonp([0],[
 	  return response.json();
 	}).then(function (response) {
 	  var tree = response;
-	  var cluster = _rcSpider2["default"].layout.cluster().size([360, ry - 120]);
+	  var cluster = _rcSpider2["default"].layout.clustrter().size([360, ry - 120]);
 	  var data = cluster.data(tree);
 	  _reactDom2["default"].render(_react2["default"].createElement(_rcSpider2["default"], { width: width, height: height, dataSource: data,
 	    offset: [rx, ry],
