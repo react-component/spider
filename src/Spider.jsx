@@ -141,12 +141,13 @@ class Spider extends SpiderBase {
 
   renderNodes() {
     const nodes = this.state.nodes;
-    const { nodeCreator, projection, transform } = this.props;
+    const { nodeCreator, nodeTransform } = this.props;
+    const nodeProjection = this.props.nodeProjection || this.props.projection;
     return nodes.valueSeq().map((node, idx) => {
-      const projectedNode = projection(node);
+      const projectedNode = nodeProjection(node);
       let groupTransform;
-      if (transform) {
-        groupTransform = transform({
+      if (nodeTransform) {
+        groupTransform = nodeTransform({
           x: projectedNode[0],
           y: projectedNode[1],
         });
@@ -173,7 +174,7 @@ class Spider extends SpiderBase {
     const { props } = child;
     const cloneProps = {
       data: props.data,
-      projection: props.projection || this.props.projection,
+      projection: props.projection || this.props.linkProjection || this.props.projection,
       stroke: child.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
       strokeWidth: child.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH,
     };
@@ -203,6 +204,8 @@ Spider.propTypes = {
   offset: PropTypes.array, // 整个图的偏移
   transform: PropTypes.func, // 指定 node 的 transform
   projection: PropTypes.func, // 指定一个 node 和 link 的映射函数
+  nodeProjection: PropTypes.func, // 指定 node 的映射函数
+  linkProjection: PropTypes.func,
   startX: PropTypes.number,
   startY: PropTypes.number,
   enableDrag: PropTypes.bool,

@@ -15,9 +15,13 @@ function onClick(d, e) {
 }
 
 function nodeCreator(data) {
-  return (<Node width="4.5" height="4.5"  >
+  return (<Node width="3.5" height="3.5"  >
     <Circle onClick={onClick} />
-    <Text offset={[8, 3]}>{data.name}</Text>
+    <Text transform={data.x < 180 ? null: new Spider.Transform().rotate(180)}
+          offset={data.x < 180 ? [8, 3] : [-8 , 3]}
+          alignment={data.x < 180 ? 'left' : 'right'}>
+      {data.name}
+    </Text>
   </Node>);
 }
 
@@ -41,7 +45,7 @@ fetch(data).then(response => response.json())
     const data = cluster.data(tree);
     ReactDOM.render(<Spider width={width} height={height} dataSource={data}
                             offset={[rx, ry]}
-                            transform={d => new Spider.Transform().rotate(d.x - 90).translate(d.y)}
+                            nodeTransform={d => new Spider.Transform().rotate(d.x - 90).translate(d.y)}
                             nodeCreator={nodeCreator}
                             linkCreator={linkCreator}
     />, document.getElementById('__react-content'));
