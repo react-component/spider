@@ -347,14 +347,14 @@
 	      var nodes = this.state.nodes;
 	      var _props = this.props;
 	      var nodeCreator = _props.nodeCreator;
-	      var projection = _props.projection;
-	      var transform = _props.transform;
+	      var nodeTransform = _props.nodeTransform;
 	
+	      var nodeProjection = this.props.nodeProjection || this.props.projection;
 	      return nodes.valueSeq().map(function (node, idx) {
-	        var projectedNode = projection(node);
+	        var projectedNode = nodeProjection(node);
 	        var groupTransform = void 0;
-	        if (transform) {
-	          groupTransform = transform({
+	        if (nodeTransform) {
+	          groupTransform = nodeTransform({
 	            x: projectedNode[0],
 	            y: projectedNode[1]
 	          });
@@ -393,7 +393,7 @@
 	
 	      var cloneProps = {
 	        data: props.data,
-	        projection: props.projection || this.props.projection,
+	        projection: props.projection || this.props.linkProjection || this.props.projection,
 	        stroke: child.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
 	        strokeWidth: child.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH
 	      };
@@ -438,6 +438,8 @@
 	  offset: _react.PropTypes.array, // 整个图的偏移
 	  transform: _react.PropTypes.func, // 指定 node 的 transform
 	  projection: _react.PropTypes.func, // 指定一个 node 和 link 的映射函数
+	  nodeProjection: _react.PropTypes.func, // 指定 node 的映射函数
+	  linkProjection: _react.PropTypes.func,
 	  startX: _react.PropTypes.number,
 	  startY: _react.PropTypes.number,
 	  enableDrag: _react.PropTypes.bool,
@@ -29562,13 +29564,15 @@
 	      var children = _props.children;
 	      var color = _props.color;
 	      var transform = _props.transform;
-	      var textAnchor = _props.textAnchor;
+	      var alignment = _props.alignment;
 	
-	      var textTransform = transform || new Transform().translate(offset[0], offset[1]);
+	
+	      var textTransform = transform || new Transform();
+	      textTransform.translate(offset[0], offset[1]);
 	      return _react2["default"].createElement(
 	        ArtText,
 	        { transform: textTransform, fill: color,
-	          style: { textAnchor: textAnchor || 'start' },
+	          alignment: alignment || 'left',
 	          font: { fontSize: 10, fontWeight: 100 }
 	        },
 	        children

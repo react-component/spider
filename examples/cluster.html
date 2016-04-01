@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>cluster.js - example - rc-spider@0.0.4</title>
+  <title>cluster.js - example - rc-spider@0.0.5</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -258,7 +258,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-spider@0.0.4</h1>
+      <h1>rc-spider@0.0.5</h1>
 
       <p>spider ui component for react</p>
     </div>
@@ -281,9 +281,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 }
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">nodeCreator</span>(<span class="hljs-params">data</span>) </span>{
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Node</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"4.5"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"4.5"</span>  &gt;</span>
+  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Node</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"3.5"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"3.5"</span>  &gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">Circle</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{onClick}</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Text</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[8,</span> <span class="hljs-attribute">3</span>]}&gt;</span>{data.name}<span class="hljs-tag">&lt;/<span class="hljs-title">Text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Text</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">{data.x</span> &lt; <span class="hljs-attribute">180</span> ? <span class="hljs-attribute">null:</span> <span class="hljs-attribute">new</span> <span class="hljs-attribute">Spider.Transform</span>()<span class="hljs-attribute">.rotate</span>(<span class="hljs-attribute">180</span>)}
+          <span class="hljs-attribute">offset</span>=<span class="hljs-value">{data.x</span> &lt; <span class="hljs-attribute">180</span> ? [<span class="hljs-attribute">8</span>, <span class="hljs-attribute">3</span>] <span class="hljs-attribute">:</span> [<span class="hljs-attribute">-8</span> , <span class="hljs-attribute">3</span>]}
+          <span class="hljs-attribute">alignment</span>=<span class="hljs-value">{data.x</span> &lt; <span class="hljs-attribute">180</span> ? '<span class="hljs-attribute">left</span>' <span class="hljs-attribute">:</span> '<span class="hljs-attribute">right</span>'}&gt;</span>
+      {data.name}
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Text</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">Node</span>&gt;</span>)</span>;
 }
 
@@ -307,7 +311,7 @@ fetch(data).then(response =&gt; response.json())
     <span class="hljs-keyword">const</span> data = cluster.data(tree);
     ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Spider</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{width}</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">{height}</span> <span class="hljs-attribute">dataSource</span>=<span class="hljs-value">{data}</span>
                             <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[rx,</span> <span class="hljs-attribute">ry</span>]}
-                            <span class="hljs-attribute">transform</span>=<span class="hljs-value">{d</span> =&gt;</span> new Spider.Transform().rotate(d.x - 90).translate(d.y)}
+                            <span class="hljs-attribute">nodeTransform</span>=<span class="hljs-value">{d</span> =&gt;</span> new Spider.Transform().rotate(d.x - 90).translate(d.y)}
                             nodeCreator={nodeCreator}
                             linkCreator={linkCreator}
     /&gt;, document.getElementById('__react-content'));

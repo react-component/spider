@@ -46,11 +46,13 @@ webpackJsonp([0],[
 	function nodeCreator(data) {
 	  return _react2["default"].createElement(
 	    Node,
-	    { width: '4.5', height: '4.5' },
+	    { width: '3.5', height: '3.5' },
 	    _react2["default"].createElement(Circle, { onClick: onClick }),
 	    _react2["default"].createElement(
 	      Text,
-	      { offset: [8, 3] },
+	      { transform: data.x < 180 ? null : new _rcSpider2["default"].Transform().rotate(180),
+	        offset: data.x < 180 ? [8, 3] : [-8, 3],
+	        alignment: data.x < 180 ? 'left' : 'right' },
 	      data.name
 	    )
 	  );
@@ -79,7 +81,7 @@ webpackJsonp([0],[
 	  var data = cluster.data(tree);
 	  _reactDom2["default"].render(_react2["default"].createElement(_rcSpider2["default"], { width: width, height: height, dataSource: data,
 	    offset: [rx, ry],
-	    transform: function transform(d) {
+	    nodeTransform: function nodeTransform(d) {
 	      return new _rcSpider2["default"].Transform().rotate(d.x - 90).translate(d.y);
 	    },
 	    nodeCreator: nodeCreator,
