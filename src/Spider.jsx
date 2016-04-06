@@ -99,13 +99,11 @@ class Spider extends SpiderBase {
     }
     const deltaX = position.clientX - this.state.lastX;
     const deltaY = position.clientY - this.state.lastY;
-    const currentX = this.state.left + deltaX;
-    const currentY = this.state.top + deltaY;
     this.setState({
       lastX: position.clientX,
       lastY: position.clientY,
-      left: currentX,
-      top: currentY,
+      left: deltaX,
+      top: deltaY,
     });
   }
 
@@ -181,7 +179,7 @@ class Spider extends SpiderBase {
     return React.cloneElement(child, cloneProps);
   }
   render() {
-    const { width, height, offset } = this.props;
+    const { width, height, offset, transform } = this.props;
     const { left, top } = this.state;
 
     const offsetLeft = offset && offset[0] || 0;
@@ -189,7 +187,8 @@ class Spider extends SpiderBase {
     const nodes = this.renderNodes();
     const links = this.renderLinks();
 
-    const groupTransform = new Transform().translate(left + offsetLeft, top + offsetTop);
+    const transformFunction = transform || new Transform();
+    const groupTransform = transformFunction.translate(left + offsetLeft, top + offsetTop);
     // node width
     return (<Surface width={width} height={height} ref="canvas">
       <Group transform={groupTransform}>
@@ -202,7 +201,7 @@ class Spider extends SpiderBase {
 
 Spider.propTypes = {
   offset: PropTypes.array, // 整个图的偏移
-  transform: PropTypes.func, // 指定 node 的 transform
+  transform: PropTypes.object, // 指定 node 的 transform
   projection: PropTypes.func, // 指定一个 node 和 link 的映射函数
   nodeProjection: PropTypes.func, // 指定 node 的映射函数
   linkProjection: PropTypes.func,
