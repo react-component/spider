@@ -25,7 +25,7 @@ class Node extends Shape {
   }
 
   nodeClick() {
-    this.props.onClick && this.props.onClick(this.props.data);
+    this.props.onClick && this.props.onClick(this.props.data.__data);
   }
   render() {
     const { children, onClick } = this.props;

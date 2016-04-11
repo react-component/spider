@@ -35,10 +35,19 @@ class MindNode extends React.Component {
     }
   }
   nodeClick(data) {
-    console.log('>> nodeClick', data);
+    if (data.children) {
+      data._children = data.children;
+      data.children = null;
+    } else {
+      data.children = data._children;
+      data._children = null;
+    }
+    this.setState({
+      data: this.state.data
+    });
   }
   nodeCreator(data) {
-    return (<Node width="4" height="4" onClick={this.nodeClick}>
+    return (<Node width="4" height="4" onClick={this.nodeClick.bind(this)}>
       <Circle stroke="#4682B4" strokeWidth="1.5"/>
       <Text offset={[5, -4]}>
         {data.name}
@@ -61,7 +70,7 @@ class MindNode extends React.Component {
    * load data...
    */
   componentDidMount() {
-    const data = new Request('./flare.json');
+    const data = new Request('./tree.json');
     fetch(data).then(response => response.json())
       .then(response => {
         this.setState({

@@ -54,8 +54,9 @@ class Spider extends SpiderBase {
         links: [],
       };
     }
-    const treeDataSource = _.cloneDeep(dataSource);
-    const nodes = this.nodes(treeDataSource);
+    //const treeDataSource = _.cloneDeep(dataSource);
+
+    const nodes = this.nodes(dataSource);
     const links = this.links(linkCreator);
 
     return {
@@ -161,7 +162,7 @@ class Spider extends SpiderBase {
       } else {
         groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
       }
-      return (<Group className="node" key={`node-${idx}`} transform={groupTransform} onMouseOver={this.nodeMouseOver.bind(this)} onMouseOut={this.nodeMouseOut.bind(this)} >
+      return (<Group className="node" key={`node-${node.id}`} transform={groupTransform} onMouseOver={this.nodeMouseOver.bind(this)} onMouseOut={this.nodeMouseOut.bind(this)} >
         { node._display ? React.Children.map(nodeCreator(node), child => {
           return React.cloneElement(child, {data: node});
         }, this) : null }
@@ -171,13 +172,14 @@ class Spider extends SpiderBase {
   renderLinks() {
     const links = this.state.links;
     const { linkCreator } = this.props;
-    return links.valueSeq().map((linkArray, idx) =>
-      <Group key={`link-${idx}`} >
+    return links.valueSeq().map((linkArray, idx) => {
+      console.log('>> linkArray', linkArray, idx);
+      return <Group key={`link-${idx}`}>
         {React.Children.map(linkArray.map(link =>
           linkCreator(link)
         ), this.passProjection, this)}
       </Group>
-    );
+    });
   }
   passProjection(child) {
     const { props } = child;
