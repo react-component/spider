@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import SpiderBase from './base/SpiderBase.jsx';
 import Shape, { Link, Node, Circle } from './shapes';
 import ReactART from 'react-art';
@@ -112,6 +113,8 @@ class Spider extends SpiderBase {
       dragging: false,
       lastX: 0,
       lastY: 0,
+      left: 0,
+      top: 0,
     });
   }
 
@@ -136,7 +139,13 @@ class Spider extends SpiderBase {
       });
     };
   }
+  nodeMouseOver(ev) {
+    ReactDOM.findDOMNode(this.refs.cursorHelper).style.cursor = 'pointer';
+  }
 
+  nodeMouseOut(ev) {
+    ReactDOM.findDOMNode(this.refs.cursorHelper).style.cursor = 'default';
+  }
   renderNodes() {
     const nodes = this.state.nodes;
     const { nodeCreator, nodeTransform } = this.props;
@@ -152,8 +161,10 @@ class Spider extends SpiderBase {
       } else {
         groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
       }
-      return (<Group className="node" key={`node-${idx}`} transform={groupTransform} >
-        { node._display ? nodeCreator(node) : null }
+      return (<Group className="node" key={`node-${idx}`} transform={groupTransform} onMouseOver={this.nodeMouseOver.bind(this)} onMouseOut={this.nodeMouseOut.bind(this)} >
+        { node._display ? React.Children.map(nodeCreator(node), child => {
+          return React.cloneElement(child, {data: node});
+        }, this) : null }
       </Group>);
     });
   }
@@ -190,12 +201,14 @@ class Spider extends SpiderBase {
     const transformFunction = transform || new Transform();
     const groupTransform = transformFunction.translate(left + offsetLeft, top + offsetTop);
     // node width
-    return (<Surface width={width} height={height} ref="canvas">
-      <Group transform={groupTransform}>
-        {React.Children.map(links, this.passProjection, this)}
-        {nodes}
-      </Group>
-    </Surface>);
+    return (<div ref="cursorHelper">
+      <Surface width={width} height={height} ref="canvas">
+        <Group transform={groupTransform}>
+          {React.Children.map(links, this.passProjection, this)}
+          {nodes}
+        </Group>
+      </Surface>
+    </div>);
   }
 }
 

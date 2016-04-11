@@ -23,9 +23,13 @@ class Node extends Shape {
 
     return React.cloneElement(child, cloneProps);
   }
+
+  nodeClick() {
+    this.props.onClick && this.props.onClick(this.props.data);
+  }
   render() {
     const { children, onClick } = this.props;
-    return (<Group className="node" onClick={onClick}>
+    return (<Group className="node" onClick={this.nodeClick.bind(this)}>
       {React.Children.map(children, this.renderTreeNode, this)}
     </Group>);
   }

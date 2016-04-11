@@ -20,14 +20,7 @@ function getNode(name) {
   }
 }
 
-function nodeCreator(data) {
-  return (<Node width="4" height="4"  >
-    <Circle stroke="#4682B4" strokeWidth="1.5"/>
-    <Text offset={[5, -4]}>
-      {data.name}
-    </Text>
-  </Node>);
-}
+
 
 function centerNode() {
 
@@ -41,10 +34,21 @@ class MindNode extends React.Component {
       scale: 1,
     }
   }
+  nodeClick(data) {
+    console.log('>> nodeClick', data);
+  }
+  nodeCreator(data) {
+    return (<Node width="4" height="4" onClick={this.nodeClick}>
+      <Circle stroke="#4682B4" strokeWidth="1.5"/>
+      <Text offset={[5, -4]}>
+        {data.name}
+      </Text>
+    </Node>);
+  }
   /**
    * move spider to center
    * @param root
-     */
+   */
   spiderTransform(root) {
     const scale = this.state.scale;
     let x = -root.x;
@@ -85,10 +89,11 @@ class MindNode extends React.Component {
 
     const tree = Spider.layout.tree().size([newHeight, viewerWidth]);
     const data = tree.data(root);
+    console.log('>> renderData', data);
     return <Spider width={viewerWidth} height={viewerHeight}
                    projection={ n => [n.y, n.x]}
                    transform={this.spiderTransform(data)}
-                   nodeCreator={nodeCreator}
+                   nodeCreator={this.nodeCreator.bind(this)}
                    dataSource={data}
                    moveable />;
   }
