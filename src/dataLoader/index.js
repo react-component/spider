@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Iterable } from 'immutable';
 import Node from '../base/Node';
 /**
  * loadArrayData
@@ -18,21 +18,20 @@ function loadArrayData(arr, spider) {
     if (nodeMap[data.id] && nodeMap[data.parent]) {
       const parentNode = nodeMap[data.parent];
 
-      if (!linkMap[data.parent]) {
-        linkMap[data.parent] = [];
-      }
-      linkMap[data.parent].push({
-        source: parentNode,
-        target: currentNode,
-      });
+      const source = parentNode;
+      const target = currentNode;
+      const key = `${source.id}-${target.id}`;
+      linkMap[key] = {
+        source, target,
+      };
       parentNode.__outDegree += 1;
       parentNode.children.push(currentNode);
       currentNode.__inDegree += 1;
     }
   });
   return {
-    nodes: new Map(nodeMap),
-    links: new Map(linkMap),
+    nodes: new Iterable(nodeMap),
+    links: new Iterable(linkMap),
   };
 }
 
@@ -53,13 +52,12 @@ function loadStructuralData(data, spider) {
     nodeMap[node.id] = node;
 
     if (parent) {
-      if (!linkMap[parent.id]) {
-        linkMap[parent.id] = [];
-      }
-      linkMap[parent.id].push({
-        source: parent,
-        target: node,
-      });
+      const source = parent;
+      const target = node;
+      const key = `${source.id}-${target.id}`;
+      linkMap[key] = {
+        source, target,
+      };
       parent.__outDegree += 1;
       parent.children.push(node);
       node.__inDegree += 1;
@@ -74,8 +72,8 @@ function loadStructuralData(data, spider) {
 
   readNode(currentData);
   return {
-    nodes: new Map(nodeMap),
-    links: new Map(linkMap),
+    nodes: new Iterable(nodeMap),
+    links: new Iterable(linkMap),
   };
 }
 /**

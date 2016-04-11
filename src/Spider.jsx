@@ -7,7 +7,6 @@ const Transform = ReactART.Transform;
 const Surface = ReactART.Surface;
 
 import layout from './layout';
-import _ from 'lodash';
 
 function defaultNodeCreator(data) {
   return (<Node margin="10" width="20" height="20" data={data}>
@@ -53,8 +52,7 @@ class Spider extends SpiderBase {
         links: [],
       };
     }
-    const treeDataSource = _.cloneDeep(dataSource);
-    const nodes = this.nodes(treeDataSource);
+    const nodes = this.nodes(dataSource);
     const links = this.links(linkCreator);
 
     return {
@@ -143,7 +141,7 @@ class Spider extends SpiderBase {
     const nodes = this.state.nodes;
     const { nodeCreator, nodeTransform } = this.props;
     const nodeProjection = this.props.nodeProjection || this.props.projection;
-    return nodes.valueSeq().map((node, idx) => {
+    return nodes.toKeyedSeq().map((node, idx) => {
       const projectedNode = nodeProjection(node);
       let groupTransform;
       if (nodeTransform) {
@@ -162,11 +160,9 @@ class Spider extends SpiderBase {
   renderLinks() {
     const links = this.state.links;
     const { linkCreator } = this.props;
-    return links.valueSeq().map((linkArray, idx) =>
-      <Group key={`link-${idx}`} >
-        {React.Children.map(linkArray.map(link =>
-          linkCreator(link)
-        ), this.passProjection, this)}
+    return links.toKeyedSeq().map((link, idx) =>
+      <Group key={`link-${idx}`}>
+        {React.Children.map(linkCreator(link), this.passProjection, this)}
       </Group>
     );
   }
@@ -188,13 +184,14 @@ class Spider extends SpiderBase {
     const offsetTop = offset && offset[1] || 0;
     const nodes = this.renderNodes();
     const links = this.renderLinks();
+    console.log('>> render', nodes, links);
 
     const groupTransform = new Transform().translate(left + offsetLeft, top + offsetTop);
     // node width
     return (<Surface width={width} height={height} ref="canvas">
       <Group transform={groupTransform}>
-        {React.Children.map(links, this.passProjection, this)}
-        {nodes}
+        {links.valueSeq()}
+        {nodes.valueSeq()}
       </Group>
     </Surface>);
   }
