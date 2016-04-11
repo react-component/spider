@@ -8,7 +8,6 @@ const Transform = ReactART.Transform;
 const Surface = ReactART.Surface;
 
 import layout from './layout';
-import _ from 'lodash';
 
 function defaultNodeCreator(data) {
   return (<Node margin="10" width="20" height="20" data={data}>
@@ -54,8 +53,6 @@ class Spider extends SpiderBase {
         links: [],
       };
     }
-    //const treeDataSource = _.cloneDeep(dataSource);
-
     const nodes = this.nodes(dataSource);
     const links = this.links(linkCreator);
 
@@ -140,18 +137,18 @@ class Spider extends SpiderBase {
       });
     };
   }
-  nodeMouseOver(ev) {
+  nodeMouseOver() {
     ReactDOM.findDOMNode(this.refs.cursorHelper).style.cursor = 'pointer';
   }
 
-  nodeMouseOut(ev) {
+  nodeMouseOut() {
     ReactDOM.findDOMNode(this.refs.cursorHelper).style.cursor = 'default';
   }
   renderNodes() {
     const nodes = this.state.nodes;
     const { nodeCreator, nodeTransform } = this.props;
     const nodeProjection = this.props.nodeProjection || this.props.projection;
-    return nodes.valueSeq().map((node, idx) => {
+    return nodes.toKeyedSeq().map((node) => {
       const projectedNode = nodeProjection(node);
       let groupTransform;
       if (nodeTransform) {
@@ -162,9 +159,12 @@ class Spider extends SpiderBase {
       } else {
         groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
       }
-      return (<Group className="node" key={`node-${node.id}`} transform={groupTransform} onMouseOver={this.nodeMouseOver.bind(this)} onMouseOut={this.nodeMouseOut.bind(this)} >
+      return (<Group className="node" key={`node-${node.id}`} transform={groupTransform}
+        onMouseOver={this.nodeMouseOver.bind(this)}
+        onMouseOut={this.nodeMouseOut.bind(this)}
+      >
         { node._display ? React.Children.map(nodeCreator(node), child => {
-          return React.cloneElement(child, {data: node});
+          return React.cloneElement(child, { data: node });
         }, this) : null }
       </Group>);
     });
@@ -172,14 +172,11 @@ class Spider extends SpiderBase {
   renderLinks() {
     const links = this.state.links;
     const { linkCreator } = this.props;
-    return links.valueSeq().map((linkArray, idx) => {
-      console.log('>> linkArray', linkArray, idx);
-      return <Group key={`link-${idx}`}>
-        {React.Children.map(linkArray.map(link =>
-          linkCreator(link)
-        ), this.passProjection, this)}
+    return links.toKeyedSeq().map((link, idx) =>
+      <Group key={`link-${idx}`}>
+        {React.Children.map(linkCreator(link), this.passProjection, this)}
       </Group>
-    });
+    );
   }
   passProjection(child) {
     const { props } = child;
@@ -199,18 +196,17 @@ class Spider extends SpiderBase {
     const offsetTop = offset && offset[1] || 0;
     const nodes = this.renderNodes();
     const links = this.renderLinks();
+    console.log('>> render', nodes, links);
 
     const transformFunction = transform || new Transform();
     const groupTransform = transformFunction.translate(left + offsetLeft, top + offsetTop);
     // node width
-    return (<div ref="cursorHelper">
-      <Surface width={width} height={height} ref="canvas">
-        <Group transform={groupTransform}>
-          {React.Children.map(links, this.passProjection, this)}
-          {nodes}
-        </Group>
-      </Surface>
-    </div>);
+    return (<Surface width={width} height={height} ref="canvas">
+      <Group transform={groupTransform}>
+        {links.valueSeq()}
+        {nodes.valueSeq()}
+      </Group>
+    </Surface>);
   }
 }
 

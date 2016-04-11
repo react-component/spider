@@ -25,10 +25,12 @@ class Node extends Shape {
   }
 
   nodeClick() {
-    this.props.onClick && this.props.onClick(this.props.data.__data);
+    if (this.props.onClick) {
+      this.props.onClick.call(this, this.props.data.__data);
+    }
   }
   render() {
-    const { children, onClick } = this.props;
+    const { children } = this.props;
     return (<Group className="node" onClick={this.nodeClick.bind(this)}>
       {React.Children.map(children, this.renderTreeNode, this)}
     </Group>);

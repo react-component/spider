@@ -3,8 +3,8 @@ import Spider from 'rc-spider';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const width = 960;
-const height = 2200;
+const width = 1200;
+const height = 3000;
 const { Node, Circle, Text} = Spider.Shape;
 
 const nodeCreator = function (data) {
@@ -16,7 +16,7 @@ const nodeCreator = function (data) {
 
 window.GLOBAL_LINK_STROKE = '#ccc';
 
-const data = new Request('./flare.json');
+const data = new Request('https://raw.githubusercontent.com/unruledboy/WebFrontEndStack/master/ux/WebFrontEndStack.json');
 fetch(data).then(response => response.json())
   .then(response => {
     const tree = response;
