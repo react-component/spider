@@ -31,6 +31,7 @@ class MindNode extends React.Component {
     super();
     this.state = {
       data: null,
+      transform: null,
       scale: 1,
     }
   }
@@ -43,7 +44,8 @@ class MindNode extends React.Component {
       data._children = null;
     }
     this.setState({
-      data: this.state.data
+      data: this.state.data,
+      transform: this.spiderTransform(data),
     });
   }
   nodeCreator(data) {
@@ -80,6 +82,7 @@ class MindNode extends React.Component {
   }
   render() {
     const root = this.state.data;
+    let transform = this.state.transform;
     if (!root) {
       return <div> loading... </div>;
     }
@@ -98,10 +101,13 @@ class MindNode extends React.Component {
 
     const tree = Spider.layout.tree().size([newHeight, viewerWidth]);
     const data = tree.data(root);
-    console.log('>> renderData', data);
+
+    if (!transform) {
+      transform = this.spiderTransform(root);
+    }
     return <Spider width={viewerWidth} height={viewerHeight}
                    projection={ n => [n.y, n.x]}
-                   transform={this.spiderTransform(data)}
+                   transform={transform}
                    nodeCreator={this.nodeCreator.bind(this)}
                    dataSource={data}
                    moveable />;

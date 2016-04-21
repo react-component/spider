@@ -59,7 +59,7 @@ function loadStructuralData(data, spider) {
         source, target,
       };
       parent.__outDegree += 1;
-      parent.children.push(node);
+      node.parent = parent;
       node.__inDegree += 1;
     }
 

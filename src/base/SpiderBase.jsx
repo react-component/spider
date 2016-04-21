@@ -26,15 +26,12 @@ class SpiderBase extends React.Component {
   }
 
   data(rawData) {
-    this.__rawData = rawData;
-    this.__data = dataLoader(rawData, this);
-    return this.__data;
+    const data = dataLoader(rawData, this);
+    this.__data = data;
   }
 
-  nodes(data, nodeCreator) {
-    if (!this.__data) {
-      this.data(data, nodeCreator);
-    }
+  nodes(data) {
+    this.data(data);
     return this.__data.nodes;
   }
 

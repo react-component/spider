@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import ReactDOM from 'react-dom';
 import SpiderBase from './base/SpiderBase.jsx';
 import Shape, { Link, Node, Circle } from './shapes';
@@ -6,6 +7,7 @@ import ReactART from 'react-art';
 const Group = ReactART.Group;
 const Transform = ReactART.Transform;
 const Surface = ReactART.Surface;
+
 
 import layout from './layout';
 
@@ -23,8 +25,8 @@ function defaultProjection(element) {
   return [element.x, element.y];
 }
 
-function defaultTransform(element) {
-  return new Transform().translate(element.x, element.y);
+function defaultTransform() {
+  return new Transform();
 }
 
 class Spider extends SpiderBase {
@@ -159,14 +161,16 @@ class Spider extends SpiderBase {
       } else {
         groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
       }
-      return (<Group className="node" key={`node-${node.id}`} transform={groupTransform}
+      const child = (<Group className="node" key={`node-${node.id}`} transform={groupTransform}
         onMouseOver={this.nodeMouseOver.bind(this)}
         onMouseOut={this.nodeMouseOut.bind(this)}
       >
-        { node._display ? React.Children.map(nodeCreator(node), child => {
-          return React.cloneElement(child, { data: node });
-        }, this) : null }
-      </Group>);
+          { node._display ? React.Children.map(nodeCreator(node), children => {
+            return React.cloneElement(children, { data: node });
+          }, this) : null }
+        </Group>);
+
+      return (<ReactTransitionGroup component={Group}>{child}</ReactTransitionGroup>);
     });
   }
   renderLinks() {
@@ -196,17 +200,18 @@ class Spider extends SpiderBase {
     const offsetTop = offset && offset[1] || 0;
     const nodes = this.renderNodes();
     const links = this.renderLinks();
-    console.log('>> render', nodes, links);
 
     const transformFunction = transform || new Transform();
     const groupTransform = transformFunction.translate(left + offsetLeft, top + offsetTop);
     // node width
-    return (<Surface width={width} height={height} ref="canvas">
-      <Group transform={groupTransform}>
-        {links.valueSeq()}
-        {nodes.valueSeq()}
-      </Group>
-    </Surface>);
+    return (<div ref="cursorHelper">
+      <Surface width={width} height={height} ref="canvas">
+        <Group transform={groupTransform}>
+          {links.valueSeq()}
+          {nodes.valueSeq()}
+        </Group>
+      </Surface>
+    </div>);
   }
 }
 
