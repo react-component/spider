@@ -25,7 +25,7 @@ React Spider Component
 ## Screenshots
 
 <img src="https://img.alicdn.com/tps/TB1NVsALVXXXXXZaXXXXXXXXXXX-1620-1334.jpg" width="288"/>
-<img src="https://os.alipayobjects.com/rmsportal/ivIBcNVOuJHpgPx.png" with="288" />
+<img src="https://os.alipayobjects.com/rmsportal/ivIBcNVOuJHpgPx.png" width="288" />
 
 ## Development
 
