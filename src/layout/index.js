@@ -5,5 +5,4 @@ const layout = {};
   layout[item] = () => new LayoutClass();
 });
 
-
 export default layout;

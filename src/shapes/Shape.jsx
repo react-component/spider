@@ -10,5 +10,11 @@ class Shape extends React.Component {
   }
 }
 
+Shape.defaultProps = {
+  offset: [0, 0],
+  stroke: null,
+  strokeWidth: 1,
+};
+
 
 export default Shape;

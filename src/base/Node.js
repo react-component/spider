@@ -9,6 +9,8 @@ const { GLOBAL_NODE_WIDTH, GLOBAL_NODE_HEIGHT, GLOBAL_NODE_MARGIN } = globalConf
 class Node {
   constructor(data, spider) {
     Object.assign(this, data);
+    this.x = Number(this.x);
+    this.y = Number(this.y);
     this.controlPoints(this.x, this.y, 'horizontal');
     this.id = data.id || uuid.v1();
     this.__data = data;

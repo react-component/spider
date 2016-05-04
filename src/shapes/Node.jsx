@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Shape from './Shape';
 import ReactART from 'react-art';
 const Group = ReactART.Group;
+const Transform = ReactART.Transform;
 
 class Node extends Shape {
   renderTreeNode(child, index) {
@@ -30,8 +31,10 @@ class Node extends Shape {
     }
   }
   render() {
-    const { children } = this.props;
-    return (<Group className="node" onClick={this.nodeClick.bind(this)}>
+    const { children, offset } = this.props;
+    const groupTransform = new Transform();
+    groupTransform.translate(offset[0], offset[1]);
+    return (<Group className="node" transform={groupTransform} onClick={this.nodeClick.bind(this)}>
       {React.Children.map(children, this.renderTreeNode, this)}
     </Group>);
   }

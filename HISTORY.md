@@ -1,3 +1,8 @@
+## v0.0.8
+ * `network` layout
+## v0.0.7
+ * `mindNode` example add
+
 ### v0.0.5
 * `Text` element now supported setting `alignment` props (left|center|right) to set text alignment.
 

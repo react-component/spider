@@ -34,7 +34,32 @@ function loadArrayData(arr, spider) {
     links: new Iterable(linkMap),
   };
 }
-
+/**
+ * 加载图的数据
+ * @param data
+ * @param spider
+ */
+function loadGraphData(data, spider) {
+  const nodeMap = {};
+  const linkMap = {};
+  data.nodes.map(rawNode => {
+    const node = new Node(rawNode, spider);
+    nodeMap[node.id] = node;
+  });
+  data.links.map(rawLink => {
+    const key = `${rawLink.from}-${rawLink.to}`;
+    const source = nodeMap[rawLink.from];
+    const target = nodeMap[rawLink.to];
+    linkMap[key] = Object.assign({
+      source,
+      target,
+    }, rawLink);
+  });
+  return {
+    nodes: new Iterable(nodeMap),
+    links: new Iterable(linkMap),
+  };
+}
 /**
  * loadStructuralData
  * 加载结构化的数据
@@ -83,6 +108,9 @@ function loadStructuralData(data, spider) {
 export default function dataLoader(data, spider) {
   if (Array.isArray(data)) {
     return loadArrayData(data, spider);
+  }
+  if (typeof data === 'object' && (data.nodes && data.links)) {
+    return loadGraphData(data, spider);
   }
   return loadStructuralData(data, spider);
 }

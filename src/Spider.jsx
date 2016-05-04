@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import ReactTransitionGroup from 'react-addons-transition-group';
 import ReactDOM from 'react-dom';
 import SpiderBase from './base/SpiderBase.jsx';
 import Shape, { Link, Node, Circle } from './shapes';
+import Color from './color';
 import ReactART from 'react-art';
 const Group = ReactART.Group;
 const Transform = ReactART.Transform;
@@ -161,7 +161,7 @@ class Spider extends SpiderBase {
       } else {
         groupTransform = new Transform().translate(projectedNode[0], projectedNode[1]);
       }
-      const child = (<Group className="node" key={`node-${node.id}`} transform={groupTransform}
+      return (<Group className="node" key={`node-${node.id}`} transform={groupTransform}
         onMouseOver={this.nodeMouseOver.bind(this)}
         onMouseOut={this.nodeMouseOut.bind(this)}
       >
@@ -169,8 +169,6 @@ class Spider extends SpiderBase {
             return React.cloneElement(children, { data: node });
           }, this) : null }
         </Group>);
-
-      return (<ReactTransitionGroup component={Group}>{child}</ReactTransitionGroup>);
     });
   }
   renderLinks() {
@@ -187,8 +185,8 @@ class Spider extends SpiderBase {
     const cloneProps = {
       data: props.data,
       projection: props.projection || this.props.linkProjection || this.props.projection,
-      stroke: child.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
-      strokeWidth: child.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH,
+      stroke: props.stroke || this.props.stroke || window.GLOBAL_LINK_STROKE,
+      strokeWidth: props.strokeWidth || this.props.strokeWidth || window.GLOBAL_LINK_STROKE_WIDTH,
     };
     return React.cloneElement(child, cloneProps);
   }
@@ -236,7 +234,7 @@ Spider.propTypes = {
 
 Spider.defaultProps = {
   projection: defaultProjection,
-  transform: defaultTransform,
+  transform: defaultTransform(),
   nodeCreator: defaultNodeCreator,
   linkCreator: defaultLinkCreator,
 };
@@ -244,5 +242,6 @@ Spider.defaultProps = {
 Spider.Shape = Shape;
 Spider.layout = layout;
 Spider.Transform = Transform;
+Spider.Color = Color;
 
 export default Spider;
