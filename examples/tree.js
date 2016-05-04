@@ -1,14 +1,14 @@
-webpackJsonp([2],{
+webpackJsonp([4],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(220);
+	module.exports = __webpack_require__(229);
 
 
 /***/ },
 
-/***/ 220:
+/***/ 229:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23,14 +23,14 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(218);
+	var _reactDom = __webpack_require__(163);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var width = 960;
-	var height = 2200;
+	var width = 1200;
+	var height = 3000;
 	var _Spider$Shape = _rcSpider2["default"].Shape;
 	var Node = _Spider$Shape.Node;
 	var Circle = _Spider$Shape.Circle;
@@ -52,7 +52,7 @@ webpackJsonp([2],{
 	
 	window.GLOBAL_LINK_STROKE = '#ccc';
 	
-	var data = new Request('./flare.json');
+	var data = new Request('https://raw.githubusercontent.com/unruledboy/WebFrontEndStack/master/ux/WebFrontEndStack.json');
 	fetch(data).then(function (response) {
 	  return response.json();
 	}).then(function (response) {

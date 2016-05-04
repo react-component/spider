@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-spider@0.0.8</title>
+  <title>mindNode.js - example - rc-spider@0.0.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -265,36 +265,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <div class="example" id="__react-content"></div>
 
     <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'normalize.css'</span>;
-<span class="hljs-keyword">import</span> Spider <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-spider'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> MindNode <span class="hljs-keyword">from</span> <span class="hljs-string">'./mindNode/index.jsx'</span>;
 
-<span class="hljs-keyword">const</span> width = <span class="hljs-number">960</span>;
-<span class="hljs-keyword">const</span> height = <span class="hljs-number">2200</span>;
-<span class="hljs-keyword">const</span> { Node, Circle, Text} = Spider.Shape;
-
-<span class="hljs-keyword">const</span> nodeCreator = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Node</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"4.5"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"4.5"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Circle</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"#4682B4"</span> <span class="hljs-attribute">strokeWidth</span>=<span class="hljs-value">"1.5"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Text</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[8,</span> <span class="hljs-attribute">-5</span>]} <span class="hljs-attribute">color</span>=<span class="hljs-value">"black"</span> &gt;</span>{data.name}<span class="hljs-tag">&lt;/<span class="hljs-title">Text</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">Node</span>&gt;</span>)</span>;
-}
-
-<span class="hljs-built_in">window</span>.GLOBAL_LINK_STROKE = <span class="hljs-string">'#ccc'</span>;
-
-<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> Request(<span class="hljs-string">'./flare.json'</span>);
-fetch(data).then(response =&gt; response.json())
-  .then(response =&gt; {
-    <span class="hljs-keyword">const</span> tree = response;
-    <span class="hljs-keyword">const</span> cluster = Spider.layout.cluster().size([height, width - <span class="hljs-number">160</span>]);
-    <span class="hljs-keyword">const</span> data = cluster.data(tree);
-    ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Spider</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{width}</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">{height}</span> <span class="hljs-attribute">dataSource</span>=<span class="hljs-value">{data}</span>
-                            <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[40,</span> <span class="hljs-attribute">0</span>]}
-                            <span class="hljs-attribute">projection</span>=<span class="hljs-value">{d=</span>&gt;</span> [d.y, d.x]}
-                            nodeCreator={nodeCreator}
-    /&gt;, document.getElementById('__react-content'));
-});
-
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">MindNode</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
   </div>
   <a href="https://github.com/react-component/spider">
@@ -305,7 +280,7 @@ fetch(data).then(response =&gt; response.json())
   </a>
   
   <script src="common.js?nowrap"></script>
-  <script src="simple.js?nowrap"></script>
+  <script src="mindNode.js?nowrap"></script>
 </body>
 
 </html>

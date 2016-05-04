@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-spider@0.0.8</title>
+  <title>network.js - example - rc-spider@0.0.8</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -271,28 +271,35 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
 <span class="hljs-keyword">const</span> width = <span class="hljs-number">960</span>;
 <span class="hljs-keyword">const</span> height = <span class="hljs-number">2200</span>;
-<span class="hljs-keyword">const</span> { Node, Circle, Text} = Spider.Shape;
+<span class="hljs-keyword">const</span> { Node, Circle, Text, Link, Rect} = Spider.Shape;
+<span class="hljs-keyword">const</span> { darken } = Spider.Color;
 
 <span class="hljs-keyword">const</span> nodeCreator = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Node</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"4.5"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"4.5"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Circle</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"#4682B4"</span> <span class="hljs-attribute">strokeWidth</span>=<span class="hljs-value">"1.5"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">Text</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[8,</span> <span class="hljs-attribute">-5</span>]} <span class="hljs-attribute">color</span>=<span class="hljs-value">"black"</span> &gt;</span>{data.name}<span class="hljs-tag">&lt;/<span class="hljs-title">Text</span>&gt;</span>
+  <span class="hljs-keyword">const</span> nodeWidth = <span class="hljs-built_in">Number</span>(data.width) || <span class="hljs-number">120</span>;
+  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Node</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{nodeWidth}</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">{32}</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[-</span> <span class="hljs-attribute">nodeWidth</span> / <span class="hljs-attribute">2</span>, <span class="hljs-attribute">-24</span>]}&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Rect</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">{data.color}</span> <span class="hljs-attribute">radius</span>=<span class="hljs-value">{16}</span> <span class="hljs-attribute">strokeWidth</span>=<span class="hljs-value">{2}</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">{darken(data.color,</span> <span class="hljs-attribute">0.2</span>)}/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Text</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[nodeWidth</span> / <span class="hljs-attribute">2</span>, <span class="hljs-attribute">12</span>]} <span class="hljs-attribute">color</span>=<span class="hljs-value">{data.textColor</span> || '<span class="hljs-attribute">white</span>'} <span class="hljs-attribute">alignment</span>=<span class="hljs-value">"middle"</span>&gt;</span>{data.text}<span class="hljs-tag">&lt;/<span class="hljs-title">Text</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">Node</span>&gt;</span>)</span>;
+}
+
+<span class="hljs-keyword">const</span> linkCreator = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">link</span>) </span>{
+  <span class="hljs-keyword">const</span> offset = link.offset ? link.offset.split(<span class="hljs-string">' '</span>) : [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>];
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Link</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{link}</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">{link.color</span> || '<span class="hljs-attribute">red</span>'} <span class="hljs-attribute">offset</span>=<span class="hljs-value">{offset}</span> <span class="hljs-attribute">text</span>=<span class="hljs-value">{link.text}</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"broke"</span> <span class="hljs-attribute">strokeRadius</span>=<span class="hljs-value">{5}</span> <span class="hljs-attribute">arrow</span>=<span class="hljs-value">{true}</span> /&gt;</span>;</span>
 }
 
 <span class="hljs-built_in">window</span>.GLOBAL_LINK_STROKE = <span class="hljs-string">'#ccc'</span>;
 
-<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> Request(<span class="hljs-string">'./flare.json'</span>);
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> Request(<span class="hljs-string">'./network.json'</span>);
 fetch(data).then(response =&gt; response.json())
   .then(response =&gt; {
-    <span class="hljs-keyword">const</span> tree = response;
-    <span class="hljs-keyword">const</span> cluster = Spider.layout.cluster().size([height, width - <span class="hljs-number">160</span>]);
-    <span class="hljs-keyword">const</span> data = cluster.data(tree);
-    ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Spider</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{width}</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">{height}</span> <span class="hljs-attribute">dataSource</span>=<span class="hljs-value">{data}</span>
+    <span class="hljs-comment">// const tree = response;</span>
+    <span class="hljs-comment">// const network = Spider.layout.network().size([height, width - 160]);</span>
+    <span class="hljs-comment">// const data = network.data(response);</span>
+    ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Spider</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">{width}</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">{height}</span> <span class="hljs-attribute">dataSource</span>=<span class="hljs-value">{response}</span>
                             <span class="hljs-attribute">offset</span>=<span class="hljs-value">{[40,</span> <span class="hljs-attribute">0</span>]}
-                            <span class="hljs-attribute">projection</span>=<span class="hljs-value">{d=</span>&gt;</span> [d.y, d.x]}
-                            nodeCreator={nodeCreator}
-    /&gt;, document.getElementById('__react-content'));
+                            <span class="hljs-attribute">nodeCreator</span>=<span class="hljs-value">{nodeCreator}</span>
+                            <span class="hljs-attribute">linkCreator</span>=<span class="hljs-value">{linkCreator}</span>
+    /&gt;</span>, document.getElementById('__react-content'));
 });
 
 </span></code></pre></div>
@@ -305,7 +312,7 @@ fetch(data).then(response =&gt; response.json())
   </a>
   
   <script src="common.js?nowrap"></script>
-  <script src="simple.js?nowrap"></script>
+  <script src="network.js?nowrap"></script>
 </body>
 
 </html>
