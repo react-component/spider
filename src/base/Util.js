@@ -74,8 +74,12 @@ export function broke(link, projection, offset) {
       ? 0
       : Math.ceil((nextPoint[1] - cy) / Math.abs(nextPoint[1] - cy));
 
-    const clockwise = link.clockwise ||
-      (nextPoint[0] > lastPoint[0] && nextPoint[1] > lastPoint[1]) ? '0' : '1';
+    let clockwise = null;
+    if (link.clockwise !== undefined) {
+      clockwise = link.clockwise;
+    } else {
+      clockwise = (nextPoint[0] > lastPoint[0] && nextPoint[1] > lastPoint[1]) ? '0' : '1';
+    }
     const r1 = { x: cx - 30 * predeltaX, y: cy - 30 * predeltaY };
     const r2 = { x: cx + 30 * nextdeltaX, y: cy + 30 * nextdeltaY };
     const radius = `L${r1.x} ${r1.y}A 30 30 0 0 ${clockwise} ${r2.x} ${r2.y}`;
