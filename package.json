@@ -44,7 +44,7 @@
     "eslint-plugin-react": "^4.2.1",
     "expect.js": "0.3.x",
     "pre-commit": "1.x",
-    "rc-tools": "5.x",
+    "rc-tools": "8.x",
     "react": "0.14.x",
     "react-addons-test-utils": "0.14.x",
     "react-dom": "0.14.x"
