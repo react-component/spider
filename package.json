@@ -39,7 +39,7 @@
     "coverage": "rc-tools run coverage"
   },
   "devDependencies": {
-    "eslint": "^2.3.0",
+    "eslint": "^7.22.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.2.1",
     "expect.js": "0.3.x",
