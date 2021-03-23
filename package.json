@@ -41,7 +41,7 @@
   "devDependencies": {
     "eslint": "^2.3.0",
     "eslint-config-airbnb": "^6.1.0",
-    "eslint-plugin-react": "^4.2.1",
+    "eslint-plugin-react": "^7.23.0",
     "expect.js": "0.3.x",
     "pre-commit": "1.x",
     "rc-tools": "5.x",
